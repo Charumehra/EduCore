@@ -94,7 +94,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-const getMe = async (req, res) => {
+const getUserInfo = async (req, res) => {
   try {
     const token = req.headers.authorization;
 
@@ -120,22 +120,19 @@ const logoutUser = async (req, res) => {
   try {
     res.cookie("token", "", {
       httpOnly: true,
-
       expires: new Date(0),
     });
 
     res.status(200).json({
       success: true,
-
       message: "Logout successful",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-
       message: error.message,
     });
   }
 };
 
-module.exports = { registerUser, loginUser, getMe, logoutUser };
+module.exports = { registerUser, loginUser, getUserInfo, logoutUser };
