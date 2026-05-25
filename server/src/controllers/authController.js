@@ -6,7 +6,7 @@ const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    const existingUser = User.findOne({ email });
+    const existingUser =await User.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -23,8 +23,8 @@ const registerUser = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user._id,
-        role: user.role,
+        id: newUser._id,
+        role:newUser.role,
       },
 
       process.env.JWT_SECRET,
@@ -39,10 +39,10 @@ const registerUser = async (req, res) => {
       success: true,
       token,
       user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
       },
     });
   } catch (err) {
