@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
   try {
     const existingUser =await User.findOne({ email });
@@ -18,13 +18,13 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role,
+      role
     });
 
     const token = jwt.sign(
       {
         id: newUser._id,
-        role:newUser.role,
+        role: newUser.role
       },
 
       process.env.JWT_SECRET,
@@ -42,11 +42,11 @@ const registerUser = async (req, res) => {
         id: newUser._id,
         name: newUser.name,
         email: newUser.email,
-        role: newUser.role,
+        role: newUser.role
       },
     });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -69,14 +69,14 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       {
         id: user._id,
-        role: user.role,
+        role: user.role
       },
       process.env.JWT_SECRET,
     );
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     res.status(200).json({
@@ -100,7 +100,7 @@ const getUserInfo = async (req, res) => {
 
     if (!token) {
       return res.status(401).json({
-        message: "Not authorized",
+        message: "Not authorized"
       });
     }
 
@@ -111,7 +111,7 @@ const getUserInfo = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(401).json({
-      message: "Invalid token",
+      message: "Invalid token"
     });
   }
 };
@@ -120,17 +120,17 @@ const logoutUser = async (req, res) => {
   try {
     res.cookie("token", "", {
       httpOnly: true,
-      expires: new Date(0),
+      expires: new Date(0)
     });
 
     res.status(200).json({
       success: true,
-      message: "Logout successful",
+      message: "Logout successful"
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: error.message
     });
   }
 };
