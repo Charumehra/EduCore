@@ -118,10 +118,69 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+const addLecture = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    if (!token) {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+    jwt.verify(token, process.env.JWT_SECRET);
+
+    const courseId = req.params.id;
+
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      res.status(404).json({ message: "Course not found" });
+    }
+
+    if (course.instructor.toString() !== decoded.id) {
+      return res.status(403).json({ message: "Not allowed" });
+    }
+
+    const { title, videoUrl, duration } = req.body;
+    if (!title || !videoUrl) {
+      return res.status(400).json({
+        message: "title and videoUrl required",
+      });
+    }
+
+    course.lectures.push({ title, videoUrl, duration });
+    await course.save();
+    res.status(200).json({
+      success: true,
+      lectures: course.lectures,
+      message: "Lecture added successfully",
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getLectures = async (req, res) => {
+  try{
+    const courseId = req.params.id;
+
+    const course = await Course.findById(courseId).populate("lectures");
+    if (!course) {
+      res.status(404).json({ message: "Course not found" });
+    }
+    res.status(200).json({
+      success: true,
+      lectures: course.lectures,
+    });
+  }
+  catch(err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 module.exports = {
   createCourse,
   getAllCourses,
   getCourseById,
   updateCourse,
   deleteCourse,
+  addLecture,
+  getLectures,
 };
