@@ -133,4 +133,4 @@ Fullstack Engineer
 
 ## ERD / Architecture Diagram
 
-
+![ERD](https://github.com/Charumehra/prodesk-capstone-EduCore/blob/11f7e035eba71aba7e44692ed21f43c0d118d77d/ERD.png)
