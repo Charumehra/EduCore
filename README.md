@@ -135,6 +135,7 @@ Fullstack Engineer
 
 
 ### Course Player Page
+![Course Player](https://www.figma.com/design/Pp3VbcO4CkBDE6Q9ssZrYt/Untitled?node-id=4-3&t=sA9AocMFfGfjFgEf-1)
 
 
 ## ERD / Architecture Diagram
