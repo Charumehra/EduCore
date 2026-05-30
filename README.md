@@ -129,13 +129,13 @@ Fullstack Engineer
 ## Figma Wireframes
 
 ### Login Page
-![Login Page](https://www.figma.com/design/Pp3VbcO4CkBDE6Q9ssZrYt/Untitled?node-id=0-1&t=sA9AocMFfGfjFgEf-1)
+(https://www.figma.com/design/Pp3VbcO4CkBDE6Q9ssZrYt/Untitled?node-id=0-1&t=sA9AocMFfGfjFgEf-1)
 
 ### Dashboard Page
 
 
 ### Course Player Page
-![Course Player](https://www.figma.com/design/Pp3VbcO4CkBDE6Q9ssZrYt/Untitled?node-id=4-3&t=sA9AocMFfGfjFgEf-1)
+(https://www.figma.com/design/Pp3VbcO4CkBDE6Q9ssZrYt/Untitled?node-id=4-3&t=sA9AocMFfGfjFgEf-1)
 
 
 ## ERD / Architecture Diagram
