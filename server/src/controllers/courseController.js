@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const createCourse = async (req, res) => {
   try {
-    const token = req.headers.authorization;
+    const token = req.cookies.token;
 
     if (!token) {
       return res.status(401).json({
@@ -69,7 +69,7 @@ const getCourseById = async (req, res) => {
 
 const updateCourse = async (req, res) => {
   try {
-    const token = req.headers.authorization;
+    const token = req.cookies.token;
     if (!token) {
       res.status(401).json({ message: "Unauthorized" });
     }
@@ -96,7 +96,7 @@ const updateCourse = async (req, res) => {
 
 const deleteCourse = async (req, res) => {
   try {
-    const token = req.headers.authorization;
+    const token = req.cookies.token;
     if (!token) {
       res.status(401).json({ message: "Unauthorized" });
     }

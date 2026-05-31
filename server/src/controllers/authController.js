@@ -96,7 +96,7 @@ const loginUser = async (req, res) => {
 
 const getUserInfo = async (req, res) => {
   try {
-    const token = req.headers.authorization;
+    const token = req.cookies.token;
 
     if (!token) {
       return res.status(401).json({
