@@ -3,16 +3,6 @@ const jwt = require("jsonwebtoken");
 
 const createCourse = async (req, res) => {
   try {
-    const token = req.cookies.token;
-
-    if (!token) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const { title, description, category, price, level } = req.body;
 
     const course = await Course.create({
@@ -21,10 +11,9 @@ const createCourse = async (req, res) => {
       category,
       price,
       level,
-
-      instructor: decoded.id,
+      instructor: req.user.id,
     });
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       course,
     });
@@ -69,20 +58,13 @@ const getCourseById = async (req, res) => {
 
 const updateCourse = async (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      res.status(401).json({ message: "Unauthorized" });
-    }
-    jwt.verify(token, process.env.JWT_SECRET);
-
     const courseId = req.params.id;
-
     const courseUpdated = await Course.findByIdAndUpdate(courseId, req.body, {
       new: true,
     });
 
     if (!courseUpdated) {
-      res.status(404).json({ message: "Course not found" });
+      return res.status(404).json({ message: "Course not found" });
     }
 
     res.status(200).json({
@@ -96,12 +78,6 @@ const updateCourse = async (req, res) => {
 
 const deleteCourse = async (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      res.status(401).json({ message: "Unauthorized" });
-    }
-    jwt.verify(token, process.env.JWT_SECRET);
-
     const courseId = req.params.id;
 
     const courseDeleted = await Course.findByIdAndDelete(courseId);
@@ -124,6 +100,4 @@ module.exports = {
   getCourseById,
   updateCourse,
   deleteCourse,
-  addLecture,
-  getLectures,
 };
