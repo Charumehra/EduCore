@@ -123,7 +123,5 @@ module.exports = {
   getAllCourses,
   getCourseById,
   updateCourse,
-  deleteCourse,
-  addLecture,
-  getLectures,
+  deleteCourse
 };
