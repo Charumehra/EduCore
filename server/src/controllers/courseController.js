@@ -1,6 +1,6 @@
 const Course = require("../models/course");
-const jwt = require("jsonwebtoken");
 
+// create a new course for the authenticated instructor
 const createCourse = async (req, res) => {
   try {
     const { title, description, category, price, level } = req.body;
@@ -11,17 +11,18 @@ const createCourse = async (req, res) => {
       category,
       price,
       level,
-      instructor: req.user.id,
+      instructor: req.user.id,  // instructor ID comes from auth middleware
     });
     return res.status(201).json({
       success: true,
       course,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 
+// get all courses with instructor information populated
 const getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find().populate("instructor", "name email");
@@ -31,10 +32,11 @@ const getAllCourses = async (req, res) => {
       courses,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 
+// get course details by ID with instructor information populated
 const getCourseById = async (req, res) => {
   try {
     const courseId = req.params.id;
@@ -47,49 +49,39 @@ const getCourseById = async (req, res) => {
     if (!course) {
      return res.status(404).json({ message: "Course not found" });
     }
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       course,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 
+// update course details by ID (only instructor who created the course can update)
 const updateCourse = async (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      res.status(401).json({ message: "Unauthorized" });
-    }
-    jwt.verify(token, process.env.JWT_SECRET);
-
     const courseId = req.params.id;
     const courseUpdated = await Course.findByIdAndUpdate(courseId, req.body, {
       new: true,
     });
 
     if (!courseUpdated) {
-      res.status(404).json({ message: "Course not found" });
+      return res.status(404).json({ message: "Course not found" });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       course: courseUpdated,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 
+// delete course by ID (only instructor who created the course can delete)
 const deleteCourse = async (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      res.status(401).json({ message: "Unauthorized" });
-    }
-    jwt.verify(token, process.env.JWT_SECRET);
-
     const courseId = req.params.id;
 
     const courseDeleted = await Course.findByIdAndDelete(courseId);
@@ -97,12 +89,12 @@ const deleteCourse = async (req, res) => {
     if (!courseDeleted) {
       return res.status(404).json({ message: "Course not found" });
     }
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Course deleted successfully",
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 
