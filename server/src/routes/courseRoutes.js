@@ -15,4 +15,5 @@ router.get("/all-courses", authMiddleware, getAllCourses);
 router.get("/:id", authMiddleware, getCourseById);
 router.put("/:id", authMiddleware, updateCourse);
 router.delete("/:id", authMiddleware, deleteCourse);
+
 module.exports = router;
