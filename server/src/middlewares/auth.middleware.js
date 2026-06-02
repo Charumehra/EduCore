@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken")
 const authMiddleware = (req, res, next) =>{
     const token = req.cookies.token
     try{
-
         // check if JWT token exists in cookies
         if(!token){
             return res.status(401).json({message:"Unauthorized"})
