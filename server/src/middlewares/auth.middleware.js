@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 
 // middleware to protect routes that require authentication
-const authMiddleware = (req, res, next) =>{
+const authInstructor = (req, res, next) =>{
     const token = req.cookies.token
     try{
         // check if JWT token exists in cookies
@@ -10,6 +10,9 @@ const authMiddleware = (req, res, next) =>{
         }
          // verify token and attach user information to request
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        if(decoded.role!=="instructor"){
+            return res.status(403).json({message:"You don't have access"})
+        }
         req.user = decoded
 
         // continue to the controller
@@ -20,4 +23,5 @@ const authMiddleware = (req, res, next) =>{
     }
 }
 
-module.exports = authMiddleware
+
+module.exports = {authInstructor}

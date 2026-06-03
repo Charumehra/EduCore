@@ -11,9 +11,9 @@ const instructorMiddleware = require("../middlewares/instructor.middleware");
 
 const router = express.Router();
 
-router.post("/create-course",authMiddleware, instructorMiddleware, createCourse);
-router.put("/:id",authMiddleware, instructorMiddleware, updateCourse);
-router.delete("/:id",authMiddleware, instructorMiddleware, deleteCourse);
+router.post("/create-course",authMiddleware.authInstructor, instructorMiddleware, createCourse);
+router.put("/:id",authMiddleware.authInstructor, instructorMiddleware, updateCourse);
+router.delete("/:id",authMiddleware.authInstructor, instructorMiddleware, deleteCourse);
 router.get("/all-courses", getAllCourses);
 router.get("/:id", getCourseById);
 
