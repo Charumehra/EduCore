@@ -1,11 +1,12 @@
-const instructorMiddleware = (req, res, next) => {
-  if (req.user.role !== "instructor") {
-    return res.status(403).json({
-      message: "Only instructors can perform this action",
-    });
-  }
+const authInstructor = (req, res, next) => {
+if (req.user.role !== "instructor") {
+return res.status(403).json({
+success: false,
+message: "Only instructors can perform this action",
+});
+}
 
-  next();
+next();
 };
 
-module.exports = instructorMiddleware;
+module.exports = { authInstructor };

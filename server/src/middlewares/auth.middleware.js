@@ -1,27 +1,38 @@
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
-// middleware to protect routes that require authentication
-const authInstructor = (req, res, next) =>{
-    const token = req.cookies.token
-    try{
-        // check if JWT token exists in cookies
-        if(!token){
-            return res.status(401).json({message:"Unauthorized"})
-        }
-         // verify token and attach user information to request
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        if(decoded.role!=="instructor"){
-            return res.status(403).json({message:"You don't have access"})
-        }
-        req.user = decoded
+const authMiddleware = (req, res, next) => {
+  try {
+    let token;
 
-        // continue to the controller
-        next()
+    const authHeader = req.headers.authorization;
+
+    if (authHeader &&authHeader.startsWith("Bearer ")) {
+      token = authHeader.split(" ")[1];
+    } else {
+      token = req.cookies.token;
     }
-    catch(err){
-        return res.status(401).json({message:"Unauthorized"})
+
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Token missing",
+      });
     }
-}
 
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
 
-module.exports = {authInstructor}
+    req.user = decoded;
+
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid token",
+    });
+  }
+};
+
+module.exports = { authMiddleware };
