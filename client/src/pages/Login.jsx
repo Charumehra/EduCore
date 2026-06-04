@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 import studentImage from "../assets/student.png";
 
 function Login() {
@@ -26,10 +26,7 @@ function Login() {
     try {
       setLoading(true);
 
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData
-      );
+      const res = await api.post("/auth/login", formData);
 
       localStorage.setItem("token", res.data.token);
 
@@ -39,10 +36,7 @@ function Login() {
     } catch (error) {
       console.error(error);
 
-      alert(
-        error.response?.data?.message ||
-          "Login Failed"
-      );
+      alert(error.response?.data?.message || "Login Failed");
     } finally {
       setLoading(false);
     }
@@ -51,20 +45,17 @@ function Login() {
   return (
     <div className="h-screen overflow-y-auto bg-[#D8C8EB] flex items-center justify-center px-4 py-8 sm:px-6 lg:px-10 lg:py-0">
       <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center">
-
         {/* Left Section */}
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-bold leading-tight">
             Learn. Grow.
             <br />
-            <span className="text-[#6B2E93]">
-              Success.
-            </span>
+            <span className="text-[#6B2E93]">Success.</span>
           </h1>
 
           <p className="mt-4 sm:mt-6 text-gray-700 text-base sm:text-lg lg:text-[20px] max-w-md lg:max-w-sm">
-            Join thousands of learners on EduCore and
-            start your learning journey today.
+            Join thousands of learners on EduCore and start your learning
+            journey today.
           </p>
 
           <img
@@ -86,10 +77,7 @@ function Login() {
             </p>
           </div>
 
-          <form
-            className="space-y-6"
-            onSubmit={handleSubmit}
-          >
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label className="block text-base sm:text-lg font-poppins font-bold mb-2">
                 Email Address
@@ -127,28 +115,21 @@ function Login() {
               disabled={loading}
               className="w-full bg-[#6B2E93] hover:bg-[#5a257a] text-white py-3 rounded-xl text-base sm:text-lg font-medium transition"
             >
-              {loading
-                ? "Logging in..."
-                : "Login"}
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
 
           <div className="flex items-center my-6">
             <div className="flex-1 h-px bg-gray-300"></div>
 
-            <span className="px-3 text-gray-500">
-              or
-            </span>
+            <span className="px-3 text-gray-500">or</span>
 
             <div className="flex-1 h-px bg-gray-300"></div>
           </div>
 
           <p className="text-center text-sm sm:text-base text-gray-600">
             Don't have an account?{" "}
-            <Link
-              to="/register"
-              className="text-purple-700 font-semibold"
-            >
+            <Link to="/register" className="text-purple-700 font-semibold">
               Sign up
             </Link>
           </p>
