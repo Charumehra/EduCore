@@ -25,51 +25,6 @@ const createCourse = async (req, res) => {
   }
 };
 
-// Get all courses
-const getAllCourses = async (req, res) => {
-  try {
-    const courses = await Course.find().populate(
-      "instructor",
-      "name email"
-    );
-
-    return res.status(200).json({
-      success: true,
-      totalCourses: courses.length,
-      courses,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      message: err.message,
-    });
-  }
-};
-
-// Get single course by ID
-const getCourseById = async (req, res) => {
-  try {
-    const course = await Course.findById(req.params.id).populate(
-      "instructor",
-      "name email"
-    );
-
-    if (!course) {
-      return res.status(404).json({
-        message: "Course not found",
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      course,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      message: err.message,
-    });
-  }
-};
-
 // Update course
 const updateCourse = async (req, res) => {
   try {
@@ -134,12 +89,57 @@ const deleteCourse = async (req, res) => {
       message: err.message,
     });
   }
+  
+// Get all courses
+const getAllCourses = async (req, res) => {
+  try {
+    const courses = await Course.find().populate(
+      "instructor",
+      "name email"
+    );
+
+    return res.status(200).json({
+      success: true,
+      totalCourses: courses.length,
+      courses,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+// Get single course by ID
+const getCourseById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id).populate(
+      "instructor",
+      "name email"
+    );
+
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      course,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 };
 
 module.exports = {
   createCourse,
-  getAllCourses,
-  getCourseById,
   updateCourse,
   deleteCourse,
+  getAllCourses,
+  getCourseById
 };
