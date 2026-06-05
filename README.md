@@ -159,13 +159,11 @@ educore/
 ├── client/
 │   ├── public/
 │   ├── src/
+|   |   ├──api/
+|   |   ├──assets/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   ├── layouts/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   ├── hooks/
-│   │   └── utils/
+│   │   ├── utils/
 │   ├── package.json
 │   └── vite.config.js
 │
@@ -176,8 +174,6 @@ educore/
 │   │   ├── middleware/
 │   │   ├── models/
 │   │   ├── routes/
-│   │   ├── services/
-│   │   └── utils/
 │   ├── package.json
 │   └── .env.example
 ```
