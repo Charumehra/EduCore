@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import studentImage from "../assets/student.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 
 function Register() {
   const navigate = useNavigate();
@@ -31,8 +31,8 @@ function Register() {
       setLoading(true);
       setError("");
 
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+      const response = await api.post(
+        "/auth/register",
         formData,
         {
           withCredentials: true,
