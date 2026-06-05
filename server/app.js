@@ -7,9 +7,12 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://prodesk-capstone-edu-core-eta.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://prodesk-capstone-edu-core-eta.vercel.app",
+    ],
     credentials: true,
-  }),
+  })
 );
 
 app.use(cookieParser());
