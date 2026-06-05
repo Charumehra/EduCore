@@ -159,8 +159,8 @@ educore/
 ├── client/
 │   ├── public/
 │   ├── src/
-|   |   ├──api/
-|   |   ├──assets/
+│   │   ├── api/
+│   │   ├──assets/
 │   │   ├── components/
 │   │   ├── pages/
 │   │   ├── utils/
