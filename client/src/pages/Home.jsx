@@ -35,8 +35,8 @@ const stats = [
 
 function Home() {
   return (
-    <div className="min-h-screen bg-[#F7F3FF] text-slate-900 z-0">
-      <main className="min-h-screen">
+    <div className="h-screen bg-[#F7F3FF] text-slate-900 z-0">
+      <main className="h-[calc(100vh-60px)] overflow-y-hidden">
         <section className="relative">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(107,46,147,0.18),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.06),transparent_30%)]" />
 
