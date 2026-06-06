@@ -4,9 +4,14 @@ const jwt = require("jsonwebtoken");
 
 //register a new user account
 const registerUser = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password} = req.body;
 
   try {
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
+    }
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -85,7 +90,7 @@ const loginUser = async (req, res) => {
     );
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -108,9 +113,8 @@ const loginUser = async (req, res) => {
 // get user information for authenticated user
 const getUserInfo = async (req, res) => {
   try {
-  
     if (!req.user || !req.user.id) {
-      return res.status(401).json({message: "Unauthorized",});
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     const user = await User.findById(req.user.id).select("-password");
