@@ -5,7 +5,7 @@ const {
   getCourseById,
   updateCourse,
   deleteCourse,
-} = require("../controllers/courseController");
+} = require("../controllers/course.controller");
 const { authMiddleware } = require("../middlewares/auth.middleware");
 const { authorizeRoles } = require("../middlewares/authorizeRoles.middleware");
 
