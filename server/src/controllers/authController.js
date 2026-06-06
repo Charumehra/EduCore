@@ -108,8 +108,9 @@ const loginUser = async (req, res) => {
 // get user information for authenticated user
 const getUserInfo = async (req, res) => {
   try {
+  
     if (!req.user || !req.user.id) {
-      return res.status(401).json({ success: false, message: "Unauthorized" });
+      return res.status(401).json({message: "Unauthorized",});
     }
 
     const user = await User.findById(req.user.id).select("-password");
