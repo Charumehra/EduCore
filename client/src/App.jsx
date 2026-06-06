@@ -5,11 +5,12 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { Dashboard } from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
     <BrowserRouter>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
