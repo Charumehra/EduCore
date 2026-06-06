@@ -4,10 +4,10 @@ const jwt = require("jsonwebtoken");
 
 //register a new user account
 const registerUser = async (req, res) => {
-  const { name, email, password} = req.body;
+  const { name, email, password , role} = req.body;
 
   try {
-    if (!name || !email || !password) {
+    if (!name || !email || !password ) {
       return res.status(400).json({
         message: "All fields are required",
       });
@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role,
+      role: role || "student",
     });
 
     const token = jwt.sign(
@@ -41,7 +41,7 @@ const registerUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -56,7 +56,7 @@ const registerUser = async (req, res) => {
       },
     });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message, stack: err.stack, fullError: err});
   }
 };
 
