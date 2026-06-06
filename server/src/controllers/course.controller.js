@@ -89,6 +89,7 @@ const deleteCourse = async (req, res) => {
       message: err.message,
     });
   }
+}
   
 // Get all courses
 const getAllCourses = async (req, res) => {
@@ -134,45 +135,8 @@ const getCourseById = async (req, res) => {
     });
   }
 };
-};
 
-// Get all courses
-const getAllCourses = async (req, res) => {
-  try {
-    const courses = await Course.find();
-    return res.status(200).json({
-      success: true,
-      totalCourses: courses.length,
-      courses,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      message: err.message,
-    });
-  }
-};
 
-// Get single course by ID
-const getCourseById = async (req, res) => {
-  try {
-    const course = await Course.findById(req.params.id);
-
-    if (!course) {
-      return res.status(404).json({
-        message: "Course not found",
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      course,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      message: err.message,
-    });
-  }
-};
 
 module.exports = {
   createCourse,
