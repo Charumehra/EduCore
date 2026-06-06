@@ -36,6 +36,13 @@ const updateCourse = async (req, res) => {
       });
     }
 
+    // Only the course creator can update
+    if (course.instructor.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Access denied",
+      });
+    }
+
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -64,12 +71,18 @@ const deleteCourse = async (req, res) => {
       });
     }
 
-    const deletedCourse = await Course.findByIdAndDelete(req.params.id);
+    // Only the course creator can delete
+    if (course.instructor.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Access denied",
+      });
+    }
+
+    await Course.findByIdAndDelete(req.params.id);
 
     return res.status(200).json({
       success: true,
       message: "Course deleted successfully",
-      course: deletedCourse
     });
   } catch (err) {
     return res.status(500).json({
