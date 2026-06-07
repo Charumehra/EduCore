@@ -49,29 +49,29 @@ function Register() {
     }
   };
   return (
-    <div className="lg:h-screen overflow-y-auto bg-[#D8C8EB] flex items-center justify-center px-4 py-14 md:py-16  sm:px-6 lg:px-10 lg:py-0 z-0">
-      <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center lg:px-20">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left object-contain">
-          <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-bold leading-tight">
-            Learn. Grow.
-            <br />
-            <span className="text-4xl sm:text-5xl lg:text-[50px] font-bold text-[#6B2E93]">
-              Success.
-            </span>
-          </h1>
+    <div className="min-h-screen overflow-y-auto bg-[#D8C8EB] flex items-center justify-center px-4 py-14  md:py-16 sm:px-6 lg:h-[calc(100vh-3.75rem)] lg:overflow-hidden lg:px-10 lg:py-0 z-0">
+      <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center lg:px-20  ">
+        {/* Left Section */}
+        <div className="flex flex-col  items-center text-center lg:items-start lg:text-left object-contain ">
+                  <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-bold leading-tight">
+                    Learn. Grow.
+                    <br />
+                    <span className="text-[#6B2E93]">Success.</span>
+                  </h1>
+        
+                  <p className="mt-4 sm:mt-6 text-gray-700 text-base sm:text-lg lg:text-[20px] max-w-md lg:max-w-sm">
+                    Join thousands of learners on EduCore and start your learning
+                    journey today.
+                  </p>
+        
+                  <img
+                    src={studentImage}
+                    alt="Student"
+                    className="hidden lg:block w-72 sm:w-96 lg:w-100 h-auto lg:h-80 mt-6 lg:mt-8"
+                  />
+                </div>
 
-          <p className="mt-4 sm:mt-6 text-gray-700 text-base sm:text-lg lg:text-[20px] max-w-md lg:max-w-sm">
-            Join thousands of learners on EduCore and start your learning
-            journey today.
-          </p>
-
-          <img
-            src={studentImage}
-            alt="Student"
-            className="hidden lg:block w-72 sm:w-96 lg:w-100 h-auto lg:h-80 mt-6 lg:mt-8"
-          />
-        </div>
-
+        {/* Right Section - Registration Form */}
         <div className="bg-white rounded-2xl lg:rounded-3xl shadow-xl p-3 sm:p-4 lg:p-5 max-w-md sm:max-w-xl mx-auto w-full">
           <div className="text-center mb-3 sm:mb-4">
             <h2 className="text-2xl sm:text-3xl font-poppins font-bold">
@@ -172,6 +172,7 @@ function Register() {
         </div>
       </div>
     </div>
+    
   );
 }
 
