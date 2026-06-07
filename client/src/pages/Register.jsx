@@ -49,7 +49,7 @@ function Register() {
     }
   };
   return (
-    <div className="h-screen overflow-y-auto bg-[#D8C8EB] flex items-center justify-center px-4 py-8 sm:px-6 lg:px-10 lg:py-0 z-0">
+    <div className="lg:h-screen overflow-y-auto bg-[#D8C8EB] flex items-center justify-center px-4 py-14 md:py-16  sm:px-6 lg:px-10 lg:py-0 z-0">
       <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center lg:px-20">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left object-contain">
           <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-bold leading-tight">
