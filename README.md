@@ -156,6 +156,7 @@ EduCore addresses these challenges by providing a centralized LMS solution with 
 
 ```bash
 educore/
+├── architecture
 ├── client/
 │   ├── public/
 │   ├── src/
@@ -174,7 +175,10 @@ educore/
 │   │   ├── middleware/
 │   │   ├── models/
 │   │   ├── routes/
+│   ├── app.js
+│   ├── package-lock.json
 │   ├── package.json
+│   ├── server.js
 │   └── .env.example
 ```
 
