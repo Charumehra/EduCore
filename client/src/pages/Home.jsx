@@ -41,7 +41,7 @@ function Home() {
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(107,46,147,0.18),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.06),transparent_30%)]" />
 
           <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 sm:py-14 lg:grid-cols-2 lg:items-center lg:gap-12 lg:px-8 lg:py-24">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl pt-6 lg:pt-0">
               <span className="inline-flex items-center rounded-full border border-[#6B2E93]/20 bg-white px-3 py-1 text-xs font-medium text-[#6B2E93] shadow-sm sm:px-4 sm:text-sm">
                 EduCore Learning Platform
               </span>
