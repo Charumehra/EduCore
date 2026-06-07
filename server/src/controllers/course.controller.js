@@ -5,6 +5,11 @@ const createCourse = async (req, res) => {
   try {
     const { title, description, category, price, level } = req.body;
 
+    const existingCourse = await Course.findOne({title})
+    if(existingCourse){
+      return res.status(400).json({message:"Course already exists"})
+    }
+
     const course = await Course.create({
       title,
       description,
