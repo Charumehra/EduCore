@@ -12,9 +12,9 @@ const { authorizeRoles } = require("../middlewares/authorizeRoles.middleware");
 const router = express.Router();
 
 router.post("/create-course", authMiddleware, authorizeRoles, createCourse);
-router.put("/:id", authMiddleware, authorizeRoles, updateCourse);
-router.delete("/:id", authMiddleware, authorizeRoles, deleteCourse);
+router.put("/update-course/:id", authMiddleware, authorizeRoles, updateCourse);
+router.delete("/delete-course/:id", authMiddleware, authorizeRoles, deleteCourse);
 router.get("/all-courses", getAllCourses);
-router.get("/:id", getCourseById);
+router.get("/course/:id", getCourseById);
 
 module.exports = router;
