@@ -164,7 +164,6 @@ educore/
 │   │   ├──assets/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   ├── utils/
 │   ├── package.json
 │   └── vite.config.js
 │
