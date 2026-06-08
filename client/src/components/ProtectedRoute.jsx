@@ -1,21 +1,41 @@
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import api from "../api/axios";
 
-const api = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_URL ||
-    "http://localhost:5000/api",
-  withCredentials: true,
-});
+function ProtectedRoute({ children }) {
+  const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      window.location.href = "/login";
-    }
+  useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        await api.get("/auth/info");
 
-    return Promise.reject(error);
+        setAuthenticated(true);
+      } catch (error) {
+        setAuthenticated(false);
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    verifyUser();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
   }
-);
 
-export default api;
+  if (!authenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+export default ProtectedRoute;
