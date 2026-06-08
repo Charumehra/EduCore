@@ -1,23 +1,21 @@
-import { Navigate } from "react-router-dom";
-import { isTokenValid } from "../utils/isTokenValid";
+import axios from "axios";
 
-function ProtectedRoute({
-  children,
-}) {
-  if (!isTokenValid()) {
-    localStorage.removeItem(
-      "token"
-    );
+const api = axios.create({
+  baseURL:
+    import.meta.env.VITE_API_URL ||
+    "http://localhost:5000/api",
+  withCredentials: true,
+});
 
-    return (
-      <Navigate
-        to="/login"
-        replace
-      />
-    );
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
   }
+);
 
-  return children;
-}
-
-export default ProtectedRoute;
+export default api;

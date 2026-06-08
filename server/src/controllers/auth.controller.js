@@ -46,8 +46,8 @@ const registerUser = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return res.status(201).json({
+      message: "User registered successfully",
       success: true,
-      token,
       user: {
         id: newUser._id,
         name: newUser.name,
@@ -56,7 +56,7 @@ const registerUser = async (req, res) => {
       },
     });
   } catch (err) {
-    return res.status(500).json({ message: err.message, stack: err.stack, fullError: err});
+    return res.status(500).json({ message: err.message});
   }
 };
 
@@ -96,8 +96,8 @@ const loginUser = async (req, res) => {
     });
 
     return res.status(200).json({
+      message: "Login successful",
       success: true,
-      token,
       user: {
         id: user._id,
         name: user.name,
@@ -123,7 +123,7 @@ const getUserInfo = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
 
-    return res.status(200).json({ success: true, user });
+    return res.status(200).json({message: "User information retrieved successfully", success: true, user });
   } catch (error) {
     return res.status(500).json({ message: "Server error" });
   }

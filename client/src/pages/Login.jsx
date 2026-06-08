@@ -27,9 +27,9 @@ function Login() {
     try {
       setLoading(true);
 
-      const res = await api.post("/auth/login", formData);
-
-      localStorage.setItem("token", res.data.token);
+      await api.post("/auth/login", formData, {
+        withCredentials: true,
+      });
 
       toast.success("Login Successful");
 

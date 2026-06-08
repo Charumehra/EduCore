@@ -1,9 +1,10 @@
+
 import { Link } from "react-router-dom";
 import studentImage from "../assets/student.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
 function Register() {
   const navigate = useNavigate();
@@ -32,15 +33,11 @@ function Register() {
       setLoading(true);
       setError("");
 
-      const response = await api.post(
-        "/auth/register",
-        formData,
-        {
-          withCredentials: true,
-        },
+    await api.post("/auth/register", formData,
+        {withCredentials: true,
+        }
       );
 
-      localStorage.setItem("token", response.data.token);
       toast.success("Registration Successful");
       navigate("/dashboard");
     } catch (err) {
