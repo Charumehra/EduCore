@@ -3,6 +3,7 @@ import studentImage from "../assets/student.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { toast } from "react-toastify";
 
 function Register() {
   const navigate = useNavigate();
@@ -40,10 +41,10 @@ function Register() {
       );
 
       localStorage.setItem("token", response.data.token);
-
+      toast.success("Registration Successful");
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      toast.error(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
