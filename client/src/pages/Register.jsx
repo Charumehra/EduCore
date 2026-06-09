@@ -1,8 +1,7 @@
 
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import studentImage from "../assets/student.png";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import {toast} from "react-toastify";
 
@@ -17,7 +16,6 @@ function Register() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -31,7 +29,6 @@ function Register() {
 
     try {
       setLoading(true);
-      setError("");
 
     await api.post("/auth/register", formData,
         {withCredentials: true,
@@ -47,14 +44,14 @@ function Register() {
     }
   };
   return (
-    <div className="min-h-screen overflow-y-auto bg-[#D8C8EB] flex items-center justify-center px-4 py-14  md:py-16 sm:px-6 lg:h-[calc(100vh-3.75rem)] lg:overflow-hidden lg:px-10 lg:py-0 z-0">
+    <div className="min-h-screen overflow-y-auto bg-background flex items-center justify-center px-4 py-14  md:py-16 sm:px-6 lg:h-[calc(100vh-3.75rem)] lg:overflow-hidden lg:px-10 lg:py-0 z-0">
       <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center lg:px-20  ">
         {/* Left Section */}
         <div className="flex flex-col  items-center text-center lg:items-start lg:text-left object-contain ">
                   <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-bold leading-tight">
                     Learn. Grow.
                     <br />
-                    <span className="text-[#6B2E93]">Success.</span>
+                    <span className="text-primary">Success.</span>
                   </h1>
         
                   <p className="mt-4 sm:mt-6 text-gray-700 text-base sm:text-lg lg:text-[20px] max-w-md lg:max-w-sm">
@@ -143,13 +140,10 @@ function Register() {
                   <option value="admin">Admin</option>
               </select>
             </div>
-            {error && (
-              <p className="text-red-500 text-sm text-center">{error}</p>
-            )}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#6B2E93] hover:bg-[#5a257a] text-white py-2.5 rounded-xl text-sm sm:text-base font-medium transition disabled:opacity-50"
+              className="w-full bg-primary hover:bg-primary-hover text-white py-2.5 rounded-xl text-sm sm:text-base font-medium transition disabled:opacity-50"
             >
               {loading ? "Registering..." : "Register"}
             </button>

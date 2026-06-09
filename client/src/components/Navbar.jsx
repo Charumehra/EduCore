@@ -14,7 +14,7 @@ function Navbar() {
 
         <h1 className="font-poppins font-semibold leading-none whitespace-nowrap text-2xl sm:text-[28px] lg:text-[32px]">
           <span className="text-black">Edu</span>
-          <span className="text-[#6B2E93]">Core</span>
+          <span className="text-primary">Core</span>
         </h1>
       </div>
 
