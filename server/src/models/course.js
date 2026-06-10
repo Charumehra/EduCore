@@ -42,7 +42,7 @@ const courseSchema = new mongoose.Schema(
       enum: ["beginner", "intermediate", "advanced"],
       default: "beginner",
     },
-    instructor: {
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true

@@ -1,20 +1,15 @@
 const express = require("express");
-const {
-  createCourse,
-  getAllCourses,
-  getCourseById,
-  updateCourse,
-  deleteCourse,
-} = require("../controllers/course.controller");
+const {createCourse,getAllCourses,getCourseById,updateCourse,deleteCourse} = require("../controllers/course.controller");
 const { authMiddleware } = require("../middlewares/auth.middleware");
-const { authorizeRoles } = require("../middlewares/authorizeRoles.middleware");
+const {authorizeRoles,authorizeOwnership,} = require("../middlewares/authorizeRoles.middleware");
 
 const router = express.Router();
 
+
 router.post("/create-course", authMiddleware, authorizeRoles, createCourse);
-router.put("/update-course/:id", authMiddleware, authorizeRoles, updateCourse);
-router.delete("/delete-course/:id", authMiddleware, authorizeRoles, deleteCourse);
-router.get("/all-courses", getAllCourses);
-router.get("/course/:id", getCourseById);
+router.get("/all-courses", authMiddleware, getAllCourses);
+router.get("/course/:id", authMiddleware, authorizeOwnership, getCourseById);
+router.put("/update-course/:id",authMiddleware,authorizeRoles,authorizeOwnership,updateCourse,);
+router.delete("/delete-course/:id",authMiddleware,authorizeRoles,authorizeOwnership,deleteCourse,);
 
 module.exports = router;
