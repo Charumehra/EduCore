@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const lectureRoutes = require("./src/routes/lectureRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const courseRoutes = require("./src/routes/courseRoutes");
 const cookieParser = require("cookie-parser");
@@ -21,5 +21,6 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
+app.use("/api/lectures", lectureRoutes);
 
 module.exports = app;

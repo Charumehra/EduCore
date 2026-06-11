@@ -1,4 +1,9 @@
 const Course = require("../models/course");
+const {
+  uploadImage,
+  uploadVideo,
+  deleteMedia,
+} = require("../services/storage.service");
 
 // Create a new course
 const createCourse = async (req, res) => {
@@ -6,8 +11,20 @@ const createCourse = async (req, res) => {
     const { title, description, category, price, level } = req.body;
 
     const existingCourse = await Course.findOne({ title });
+
     if (existingCourse) {
-      return res.status(400).json({ message: "Course already exists" });
+      return res.status(400).json({
+        message: "Course already exists",
+      });
+    }
+
+    let thumbnailData = {
+      url: "",
+      publicId: "",
+    };
+
+    if (req.file) {
+      thumbnailData = await uploadImage(req.file.path, "educore/courses");
     }
 
     const course = await Course.create({
@@ -17,6 +34,9 @@ const createCourse = async (req, res) => {
       price,
       level,
       owner: req.user.id,
+
+      thumbnail: thumbnailData.url,
+      thumbnailPublicId: thumbnailData.publicId,
     });
 
     return res.status(201).json({
@@ -89,7 +109,10 @@ const getAllCourses = async (req, res) => {
 // Get single course by ID
 const getCourseById = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id).populate("owner", "name email");
+    const course = await Course.findById(req.params.id).populate(
+      "owner",
+      "name email",
+    );
     return res.status(200).json({
       success: true,
       course,

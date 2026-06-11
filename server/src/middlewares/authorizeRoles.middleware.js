@@ -13,7 +13,7 @@ const authorizeRoles = (req, res, next) => {
 
 const authorizeOwnership = async (req, res, next) => {
   try {
-    const course = await Course.findById(req.params.id);
+    const course = await Course.findById(req.params.id || req.params.courseId);
 
     if (!course) {
       return res.status(404).json({

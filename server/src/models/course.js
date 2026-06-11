@@ -1,19 +1,5 @@
 const mongoose = require("mongoose");
-
-const lectureSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true
-  },
-  videoUrl: {
-    type: String,
-    required: true,
-  },
-  publicId: String,
-  duration: String,
-});
+const lectureSchema = require("./lecture");
 
 const courseSchema = new mongoose.Schema(
   {
@@ -26,6 +12,10 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
     thumbnail: {
+      type: String,
+      default: "",
+    },
+    thumbnailPublicId: {
       type: String,
       default: "",
     },
@@ -45,9 +35,15 @@ const courseSchema = new mongoose.Schema(
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
+      required: true,
     },
-    lectures: [lectureSchema],
+    lectures: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Lecture",
+      },
+       
+    ],
     enrolledStudents: [
       {
         type: mongoose.Schema.Types.ObjectId,
