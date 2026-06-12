@@ -90,9 +90,7 @@ const deleteCourse = async (req, res) => {
 // Get all courses
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find({
-      owner: req.user.id,
-    });
+    const courses = await Course.find().populate("owner", "name");;
 
     return res.status(200).json({
       success: true,
