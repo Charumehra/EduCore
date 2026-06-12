@@ -1,5 +1,5 @@
 const express = require("express");
-const {createCourse,getAllCourses,getCourseById,updateCourse,deleteCourse} = require("../controllers/course.controller");
+const {createCourse,getAllCourses,getCourseById,updateCourse,deleteCourse,enrollCourse, getMyCourses, getEnrolledStudents} = require("../controllers/course.controller");
 const { authMiddleware } = require("../middlewares/auth.middleware");
 const {authorizeRoles,authorizeOwnership,} = require("../middlewares/authorizeRoles.middleware");
 const upload = require("../middlewares/upload.middleware");
@@ -12,5 +12,11 @@ router.get("/all-courses", authMiddleware, getAllCourses);
 router.get("/course/:id", authMiddleware, authorizeOwnership, getCourseById);
 router.put("/update-course/:id",authMiddleware,authorizeRoles,authorizeOwnership,updateCourse,);
 router.delete("/delete-course/:id",authMiddleware,authorizeRoles,authorizeOwnership,deleteCourse,);
+
+
+//for enrollment and student management
+router.post("/:id/enroll",authMiddleware,enrollCourse);
+router.get("/my-courses",authMiddleware,getMyCourses);
+router.get("/:id/students",authMiddleware,authorizeOwnership,getEnrolledStudents);
 
 module.exports = router;

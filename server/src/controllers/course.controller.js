@@ -90,7 +90,7 @@ const deleteCourse = async (req, res) => {
 // Get all courses
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find().populate("owner", "name");;
+    const courses = await Course.find().populate("owner", "name");
 
     return res.status(200).json({
       success: true,
@@ -122,10 +122,109 @@ const getCourseById = async (req, res) => {
   }
 };
 
+const enrollCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const studentId = req.user.id;
+
+    // Only students can enroll
+    if (req.user.role !== "student") {
+      return res.status(403).json({
+        success: false,
+        message: "Only students can enroll in courses",
+      });
+    }
+
+    const course = await Course.findById(id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    const alreadyEnrolled = course.enrolledStudents.some(
+      (student) => student.toString() === studentId,
+    );
+
+    if (alreadyEnrolled) {
+      return res.status(400).json({
+        success: false,
+        message: "You are already enrolled in this course",
+      });
+    }
+
+    course.enrolledStudents.push(studentId);
+
+    await course.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Enrollment successful",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getEnrolledStudents = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id).populate(
+      "enrolledStudents",
+      "name email role",
+    );
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      totalStudents: course.enrolledStudents.length,
+      students: course.enrolledStudents,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getMyCourses = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const courses = await Course.find({
+      enrolledStudents: studentId,
+    });
+
+    return res.status(200).json({
+      success: true,
+      courses,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createCourse,
   updateCourse,
   deleteCourse,
   getAllCourses,
   getCourseById,
+  enrollCourse,
+  getEnrolledStudents,
+  getMyCourses,
 };
