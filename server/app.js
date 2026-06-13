@@ -4,7 +4,7 @@ const lectureRoutes = require("./src/routes/lectureRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const courseRoutes = require("./src/routes/courseRoutes");
 const cookieParser = require("cookie-parser");
-const cors = require("cors"); // keep only ONCE
+const cors = require("cors"); 
 
 app.use(cors({
   origin: [

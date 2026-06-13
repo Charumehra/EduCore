@@ -185,6 +185,15 @@ const getEnrolledStudents = async (req, res) => {
       });
     }
 
+    const isOwner = course.owner.toString() === req.user.id;
+
+    if (req.user.role !== "admin" && !isOwner) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied",
+      });
+    }
+
     return res.status(200).json({
       success: true,
       totalStudents: course.enrolledStudents.length,
@@ -204,11 +213,50 @@ const getMyCourses = async (req, res) => {
 
     const courses = await Course.find({
       enrolledStudents: studentId,
-    });
+    }).populate("owner", "name");
 
     return res.status(200).json({
       success: true,
       courses,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getCourseForLearning = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id)
+      .populate("lectures");
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    const isEnrolled = course.enrolledStudents.some(
+      (student) => student.toString() === req.user.id
+    );
+
+    if (
+      req.user.role !== "admin" &&
+      course.owner.toString() !== req.user.id &&
+      !isEnrolled
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      course,
     });
   } catch (error) {
     return res.status(500).json({
@@ -227,4 +275,5 @@ module.exports = {
   enrollCourse,
   getEnrolledStudents,
   getMyCourses,
+  getCourseForLearning,
 };
