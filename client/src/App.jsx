@@ -1,31 +1,75 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import { Dashboard } from "./pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Navbar from "./components/Navbar";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
+import Home from "./components/Home";
+import Layout from "./components/Layout";
+// Pages
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+
+import StudentDashboard from "./pages/student/StudentDashboard";
+import InstructorDashboard from "./pages/instructor/InstructorDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ManageCourses from "./pages/admin/ManageCourses";
+import AdminProfile from "./pages/admin/AdminProfile";
+
+// Route Guards
+import ProtectedRoute from "./routes/ProtectedRoutes";
+import RoleRoute from "./routes/RoleRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Navbar />
-      <ToastContainer />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <StudentDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/instructor/dashboard"
+            element={
+              <RoleRoute allowedRoles={["instructor", "admin"]}>
+                <InstructorDashboard />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/admin/dashboard"
+            element={
+              <RoleRoute allowedRoles={["admin"]}>
+                <AdminDashboard />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/admin/courses"
+            element={
+              <RoleRoute allowedRoles={["admin"]}>
+                <ManageCourses />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/admin/profile"
+            element={
+              <RoleRoute allowedRoles={["admin"]}>
+                <AdminProfile />
+              </RoleRoute>
+            }
+          />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 };

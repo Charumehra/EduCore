@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../api/axios";
-import studentImage from "../assets/student.png";
+import api from "../../services/api";
+import studentImage from "../../assets/student.png";
 import { toast } from "react-toastify";
 
 function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -27,13 +30,15 @@ function Login() {
     try {
       setLoading(true);
 
-      await api.post("/auth/login", formData, {
-        withCredentials: true,
-      });
+      const res = await api.post("/auth/login", formData);
 
-      toast.success("Login Successful");
+      dispatch(setUser(res.data.user));
 
-      navigate("/dashboard");
+      const role = res.data.user.role;
+
+      if (role === "admin") navigate("/admin/dashboard");
+      else if (role === "instructor") navigate("/instructor/dashboard");
+      else navigate("/dashboard");
     } catch (error) {
       console.error(error);
 
@@ -44,14 +49,13 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen overflow-y-auto bg-[#D8C8EB] flex items-center justify-center px-4  md:py-16 sm:px-6 lg:h-[calc(100vh-3.75rem)] lg:overflow-hidden lg:px-10 lg:py-0 z-0">
+    <div className="min-h-screen overflow-y-auto bg-background flex items-center justify-center px-4  md:py-16 sm:px-6 lg:h-[calc(100vh-3.75rem)] lg:overflow-hidden lg:px-10 lg:py-0 z-0">
       <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center lg:px-20  ">
-        {/* Left Section */}
         <div className="flex flex-col  items-center text-center lg:items-start lg:text-left object-contain ">
           <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-bold leading-tight">
             Learn. Grow.
             <br />
-            <span className="text-[#6B2E93]">Success.</span>
+            <span className="text-primary">Success.</span>
           </h1>
 
           <p className="mt-4 sm:mt-6 text-gray-700 text-base sm:text-lg lg:text-[20px] max-w-md lg:max-w-sm">
@@ -66,7 +70,6 @@ function Login() {
           />
         </div>
 
-        {/* Right Section */}
         <div className="bg-white rounded-2xl lg:rounded-3xl shadow-xl p-3 sm:p-5 lg:p-6 max-w-sm sm:max-w-lg lg:max-w-xl mx-auto w-full">
           <div className="text-center mb-5 sm:mb-6">
             <h2 className="text-2xl sm:text-3xl font-poppins font-bold">
@@ -114,7 +117,7 @@ function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#6B2E93] hover:bg-[#5a257a] text-white py-2.5 rounded-xl text-sm sm:text-base font-medium transition"
+              className="w-full bg-primary hover:bg-primary-dark text-white py-2.5 rounded-xl text-sm sm:text-base font-medium transition"
             >
               {loading ? "Logging in..." : "Login"}
             </button>

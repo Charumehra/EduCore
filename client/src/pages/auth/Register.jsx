@@ -1,11 +1,10 @@
 
-import { Link ,useNavigate} from "react-router-dom";
-import studentImage from "../assets/student.png";
 import { useState } from "react";
-import api from "../api/axios";
-import {toast} from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import api from "../../services/api";
+import studentImage from "../../assets/student.png";
 
-function Register() {
+const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -30,21 +29,21 @@ function Register() {
     try {
       setLoading(true);
 
-    await api.post("/auth/register", formData,
-        {withCredentials: true,
-        }
-      );
+      await api.post("/auth/register", formData);
 
-      toast.success("Registration Successful");
-      navigate("/dashboard");
+      alert("Registration successful 🎉");
+
+      navigate("/login");
+
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      alert(err?.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
   };
+
   return (
-    <div className="min-h-screen overflow-y-auto bg-background flex items-center justify-center px-4 py-14  md:py-16 sm:px-6 lg:h-[calc(100vh-3.75rem)] lg:overflow-hidden lg:px-10 lg:py-0 z-0">
+     <div className="min-h-screen overflow-y-auto bg-background flex items-center justify-center px-4 py-14  md:py-16 sm:px-6 lg:h-[calc(100vh-3.75rem)] lg:overflow-hidden lg:px-10 lg:py-0 z-0">
       <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center lg:px-20  ">
         {/* Left Section */}
         <div className="flex flex-col  items-center text-center lg:items-start lg:text-left object-contain ">
@@ -90,6 +89,7 @@ function Register() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                required
                 className="w-full border border-gray-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
               />
             </div>
@@ -105,6 +105,7 @@ function Register() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                required
                 className="w-full border border-gray-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
               />
             </div>
@@ -120,6 +121,7 @@ function Register() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
+                required
                 className="w-full border border-gray-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
               />
             </div>
@@ -133,6 +135,7 @@ function Register() {
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
+                required
                 className="w-full border border-gray-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
               >
                   <option value="student">Student</option>
@@ -164,8 +167,8 @@ function Register() {
         </div>
       </div>
     </div>
-    
   );
-}
+};
 
 export default Register;
+   
