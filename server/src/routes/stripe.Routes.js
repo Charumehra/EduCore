@@ -8,3 +8,5 @@ router.post(
   authMiddleware,
   createCheckoutSession
 );
+
+module.exports = router;

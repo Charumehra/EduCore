@@ -24,7 +24,7 @@ const createCheckoutSession = async (req, res) => {
               description: course.description,
               images: [course.thumbnail],
             },
-            unit_amount: course.price * 100, // paise
+            unit_amount: course.price * 100,
           },
           quantity: 1,
         },
