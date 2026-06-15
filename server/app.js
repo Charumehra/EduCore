@@ -3,6 +3,7 @@ const app = express();
 const lectureRoutes = require("./src/routes/lectureRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const courseRoutes = require("./src/routes/courseRoutes");
+const stripeRoutes = require("./src/routes/stripe.Routes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors"); 
 
@@ -22,5 +23,6 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/lectures", lectureRoutes);
+app.use("/api/stripe", stripeRoutes);
 
 module.exports = app;
