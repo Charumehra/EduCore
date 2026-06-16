@@ -13,6 +13,7 @@ import ManageCourses from "./pages/admin/ManageCourses";
 import AdminProfile from "./pages/admin/AdminProfile";
 import CourseDetails from "./pages/student/CourseDetail";
 import PaymentSuccess from "./pages/student/PaymentSuccess";
+import MyCourses from "./pages/student/MyCourses";
 
 import ProtectedRoute from "./routes/ProtectedRoutes";
 import RoleRoute from "./routes/RoleRoute";
@@ -40,6 +41,8 @@ const App = () => {
           <Route path="/course/:id" element={<CourseDetails />} />
 
           <Route path="/payment-success" element={<PaymentSuccess />} />
+
+          <Route path="/my-courses" element={<MyCourses />} />
 
           <Route
             path="/instructor/dashboard"

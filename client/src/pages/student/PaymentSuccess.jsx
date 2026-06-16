@@ -1,28 +1,39 @@
 import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import api from "../../services/api";
+import { setMyCourses } from "../../redux/slices/courseSlice";
 
 const PaymentSuccess = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const courseId = params.get("courseId");
 
   useEffect(() => {
-    const enroll = async () => {
+    const enrollAndSync = async () => {
       try {
-        await api.post("/courses/enroll", {
+        // 1. Enroll user
+        await api.post(`/courses/${courseId}/enroll`, {
           courseId,
         });
+
+        // 2. Fetch updated enrolled courses
+        const res = await api.get("/courses/my-courses");
+
+        // 3. Save in Redux
+        dispatch(setMyCourses(res.data.courses));
+
       } catch (err) {
         console.log(err);
       }
     };
 
     if (courseId) {
-      enroll();
+      enrollAndSync();
     }
-  }, [courseId]);
+  }, [courseId, dispatch]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
