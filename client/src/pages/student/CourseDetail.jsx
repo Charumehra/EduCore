@@ -77,7 +77,7 @@ const CourseDetails = () => {
 
   return (
     <div className="min-h-screen bg-background text-slate-800 selection:bg-primary/10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16 pb-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-16 pb-16">
         <button
           onClick={() => navigate(-1)}
           className="group inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-primary transition-all duration-300 mb-6"
