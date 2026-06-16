@@ -1,17 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
+import {
+  setCourses,
+  setMyCourses,
+  setSelectedCourse,
+} from "../../redux/slices/courseSlice";
 
 const StudentDashboard = () => {
-  const [myCourses, setMyCourses] = useState([]);
-  const [allCourses, setAllCourses] = useState([]);
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { courses, myCourses } = useSelector(
+    (state) => state.course
+  );
 
   const fetchMyCourses = async () => {
     try {
-      const res = await api.get("courses/my-courses");
-      setMyCourses(res.data.courses);
+      const res = await api.get("/courses/my-courses");
+
+      dispatch(setMyCourses(res.data.courses || []));
     } catch (err) {
       console.log(err);
     }
@@ -19,21 +28,28 @@ const StudentDashboard = () => {
 
   const fetchAllCourses = async () => {
     try {
-      const res = await api.get("courses/all-courses");
-      setAllCourses(res.data.courses);
+      const res = await api.get("/courses/all-courses");
+
+      dispatch(setCourses(res.data.courses || []));
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    fetchMyCourses();
-    fetchAllCourses();
+    if (myCourses.length === 0) {
+      fetchMyCourses();
+    }
+
+    if (courses.length === 0) {
+      fetchAllCourses();
+    }
   }, []);
 
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-primary">
@@ -45,10 +61,13 @@ const StudentDashboard = () => {
           </p>
         </div>
 
-        {/* Stats Cards */}
+        {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
+
           <div className="bg-white rounded-2xl shadow-md p-5 border-l-4 border-primary">
-            <h3 className="text-gray-500 text-sm">Enrolled Courses</h3>
+            <h3 className="text-gray-500 text-sm">
+              Enrolled Courses
+            </h3>
 
             <p className="text-2xl sm:text-3xl font-bold text-primary mt-2">
               {myCourses.length}
@@ -56,12 +75,15 @@ const StudentDashboard = () => {
           </div>
 
           <div className="bg-white rounded-2xl shadow-md p-5 border-l-4 border-primary">
-            <h3 className="text-gray-500 text-sm">Available Courses</h3>
+            <h3 className="text-gray-500 text-sm">
+              Available Courses
+            </h3>
 
             <p className="text-2xl sm:text-3xl font-bold text-primary mt-2">
-              {allCourses.length}
+              {courses.length}
             </p>
           </div>
+
         </div>
 
         {/* My Learning */}
@@ -87,6 +109,7 @@ const StudentDashboard = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+
             {myCourses.map((course) => (
               <div
                 key={course._id}
@@ -112,7 +135,10 @@ const StudentDashboard = () => {
                   </p>
 
                   <button
-                    onClick={() => navigate(`/learn/${course._id}`)}
+                    onClick={() => {
+                      dispatch(setSelectedCourse(course));
+                      navigate(`/learn/${course._id}`);
+                    }}
                     className="mt-auto bg-primary hover:bg-primary-hover text-white py-2 rounded-xl transition"
                   >
                     Continue Learning
@@ -120,30 +146,35 @@ const StudentDashboard = () => {
                 </div>
               </div>
             ))}
+
           </div>
         )}
 
+        {/* Explore Courses */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl sm:text-2xl font-semibold text-primary">
             Explore Courses
           </h2>
 
           <span className="bg-white px-4 py-2 rounded-full text-sm text-primary font-medium shadow">
-            {allCourses.length} Courses
+            {courses.length} Courses
           </span>
         </div>
 
-        {allCourses.length === 0 ? (
+        {courses.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-md p-10 text-center">
             <h3 className="text-xl font-semibold text-primary">
               No Courses Available
             </h3>
 
-            <p className="text-gray-500 mt-2">New courses will appear here.</p>
+            <p className="text-gray-500 mt-2">
+              New courses will appear here.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-            {allCourses.map((course) => (
+
+            {courses.map((course) => (
               <div
                 key={course._id}
                 className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
@@ -158,8 +189,9 @@ const StudentDashboard = () => {
                   <h3 className="text-lg font-bold text-primary line-clamp-2 min-h-14">
                     {course.title}
                   </h3>
+
                   <div className="mt-4 flex items-center justify-between">
-                    <p className="text-sm text-gray-500 mt-1 capitalize">
+                    <p className="text-sm text-gray-500 capitalize">
                       {course.category}
                     </p>
 
@@ -169,7 +201,10 @@ const StudentDashboard = () => {
                   </div>
 
                   <button
-                    onClick={() => navigate(`/course/${course._id}`)}
+                    onClick={() => {
+                      dispatch(setSelectedCourse(course));
+                      navigate(`/course/${course._id}`);
+                    }}
                     className="mt-4 bg-primary hover:bg-primary-hover text-white py-2 rounded-xl transition"
                   >
                     View Course
@@ -177,8 +212,10 @@ const StudentDashboard = () => {
                 </div>
               </div>
             ))}
+
           </div>
         )}
+
       </div>
     </div>
   );

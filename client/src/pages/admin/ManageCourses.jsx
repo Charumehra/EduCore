@@ -1,22 +1,30 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
 import { Pencil, Trash2, Search } from "lucide-react";
 import { toast } from "react-toastify";
+import {
+  setCourses,
+  setSelectedCourse,
+} from "../../redux/slices/courseSlice";
 
 const ManageCourses = () => {
-  const [courses, setCourses] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { courses } = useSelector((state) => state.course);
+
   const [search, setSearch] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [courseToDelete, setCourseToDelete] = useState(null);
   const [deleting, setDeleting] = useState(false);
-
-  const navigate = useNavigate();
 
   const fetchCourses = async () => {
     try {
       const res = await api.get("/courses/all-courses");
-      setCourses(res.data.courses || []);
+
+      dispatch(setCourses(res.data.courses || []));
     } catch (error) {
       console.error(error);
       toast.error("Failed to fetch courses");
@@ -24,25 +32,34 @@ const ManageCourses = () => {
   };
 
   useEffect(() => {
-    fetchCourses();
+    if (courses.length === 0) {
+      fetchCourses();
+    }
   }, []);
 
   const handleDelete = async () => {
-    if (!selectedCourse) return;
+    if (!courseToDelete) return;
 
     try {
       setDeleting(true);
 
-      await api.delete(`/courses/delete-course/${selectedCourse._id}`);
+      await api.delete(
+        `/courses/delete-course/${courseToDelete._id}`
+      );
 
-      setCourses((prev) =>
-        prev.filter((course) => course._id !== selectedCourse._id),
+      dispatch(
+        setCourses(
+          courses.filter(
+            (course) =>
+              course._id !== courseToDelete._id
+          )
+        )
       );
 
       toast.success("Course deleted successfully");
 
       setShowDeleteModal(false);
-      setSelectedCourse(null);
+      setCourseToDelete(null);
     } catch (error) {
       console.error(error);
       toast.error("Failed to delete course");
@@ -52,7 +69,9 @@ const ManageCourses = () => {
   };
 
   const filteredCourses = courses.filter((course) =>
-    course.title.toLowerCase().includes(search.toLowerCase()),
+    course.title
+      .toLowerCase()
+      .includes(search.toLowerCase())
   );
 
   return (
@@ -60,13 +79,16 @@ const ManageCourses = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-primary">Manage Courses</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-primary">
+            Manage Courses
+          </h1>
 
           <p className="text-gray-700 mt-2">
             View, edit and delete courses from the platform.
           </p>
         </div>
 
+        {/* Search */}
         <div className="relative mb-8">
           <Search
             size={18}
@@ -77,11 +99,14 @@ const ManageCourses = () => {
             type="text"
             placeholder="Search courses..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white pl-11 pr-4 py-3 rounded-xl shadow outline-none border border-gray-200 focus:border-primary"
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+            className="w-full bg-white pl-11 pr-4 py-3 rounded-xl shadow border border-gray-200 outline-none focus:border-primary"
           />
         </div>
 
+        {/* Empty State */}
         {filteredCourses.length === 0 ? (
           <div className="bg-white rounded-2xl p-10 text-center shadow">
             <h2 className="text-xl font-semibold text-primary">
@@ -94,34 +119,49 @@ const ManageCourses = () => {
           </div>
         ) : (
           <div className="overflow-x-auto bg-white rounded-2xl shadow">
-            <table className="w-full min-w-175">
+            <table className="w-full min-w-200">
               <thead className="bg-primary text-white">
                 <tr>
-                  <th className="p-4 text-left">Course</th>
+                  <th className="p-4 text-left">
+                    Course
+                  </th>
 
-                  <th className="p-4 text-left">Category</th>
+                  <th className="p-4 text-left">
+                    Category
+                  </th>
 
-                  <th className="p-4 text-left">Level</th>
+                  <th className="p-4 text-left">
+                    Level
+                  </th>
 
-                  <th className="p-4 text-left">Students</th>
+                  <th className="p-4 text-left">
+                    Students
+                  </th>
 
-                  <th className="p-4 text-center">Actions</th>
+                  <th className="p-4 text-center">
+                    Actions
+                  </th>
                 </tr>
               </thead>
 
               <tbody>
                 {filteredCourses.map((course) => (
-                  <tr key={course._id} className="border-b hover:bg-gray-50">
+                  <tr
+                    key={course._id}
+                    className="border-b hover:bg-gray-50"
+                  >
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <img
                           src={course.thumbnail}
                           alt={course.title}
-                          className="w-16 h-12 object-cover rounded-lg"
+                          className="w-16 h-12 rounded-lg object-cover"
                         />
 
                         <div>
-                          <h3 className="font-semibold">{course.title}</h3>
+                          <h3 className="font-semibold">
+                            {course.title}
+                          </h3>
 
                           <p className="text-sm text-gray-500">
                             ₹{course.price}
@@ -130,18 +170,31 @@ const ManageCourses = () => {
                       </div>
                     </td>
 
-                    <td className="p-4 capitalize">{course.category}</td>
+                    <td className="p-4 capitalize">
+                      {course.category}
+                    </td>
 
-                    <td className="p-4 capitalize">{course.level}</td>
+                    <td className="p-4 capitalize">
+                      {course.level}
+                    </td>
 
                     <td className="p-4">
-                      {course.enrolledStudents?.length || 0}
+                      {course.enrolledStudents
+                        ?.length || 0}
                     </td>
 
                     <td className="p-4">
                       <div className="flex justify-center gap-3">
                         <button
-                          onClick={() => navigate(`/course/${course._id}/edit`)}
+                          onClick={() => {
+                            dispatch(
+                              setSelectedCourse(course)
+                            );
+
+                            navigate(
+                              `/course/${course._id}/edit`
+                            );
+                          }}
                           className="p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
                         >
                           <Pencil size={18} />
@@ -149,7 +202,7 @@ const ManageCourses = () => {
 
                         <button
                           onClick={() => {
-                            setSelectedCourse(course);
+                            setCourseToDelete(course);
                             setShowDeleteModal(true);
                           }}
                           className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition"
@@ -166,6 +219,7 @@ const ManageCourses = () => {
         )}
       </div>
 
+      {/* Delete Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">
@@ -177,7 +231,7 @@ const ManageCourses = () => {
               Are you sure you want to delete
               <span className="font-semibold text-primary">
                 {" "}
-                {selectedCourse?.title}
+                {courseToDelete?.title}
               </span>
               ?
             </p>
@@ -190,10 +244,10 @@ const ManageCourses = () => {
               <button
                 onClick={() => {
                   setShowDeleteModal(false);
-                  setSelectedCourse(null);
+                  setCourseToDelete(null);
                 }}
                 disabled={deleting}
-                className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
+                className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100"
               >
                 Cancel
               </button>
@@ -201,9 +255,11 @@ const ManageCourses = () => {
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
               >
-                {deleting ? "Deleting..." : "Delete"}
+                {deleting
+                  ? "Deleting..."
+                  : "Delete"}
               </button>
             </div>
           </div>

@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
 
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      <div className="pt-14 ">{children}</div>
+      <div >{children}</div>
     </div>
   );
 };

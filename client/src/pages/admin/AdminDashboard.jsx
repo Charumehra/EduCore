@@ -1,13 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import api from "../../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setCourses } from "../../redux/slices/courseSlice";
+import { User } from "lucide-react";
 
 const AdminDashboard = () => {
-  const [courses, setCourses] = useState([]);
+  const dispatch = useDispatch();
+  const courses = useSelector((state) => state.course.courses);
 
   const fetchCourses = async () => {
     try {
       const response = await api.get("/courses/all-courses");
-      setCourses(response.data.courses);
+
+      dispatch(setCourses(response.data.courses || []));
     } catch (error) {
       console.error(error);
     }
@@ -106,10 +111,12 @@ const AdminDashboard = () => {
                   </p>
 
                   <div className="mt-auto pt-4 flex items-center justify-between">
-                    <span className="text-xs sm:text-sm text-gray-700">
-                      👨‍🎓 {course.enrolledStudents?.length || 0} Students
-                    </span>
-
+                    <div className="flex items-center justify-end gap-1 text-sm text-gray-600">
+                      <User size={16} />
+                      <span>
+                        {course.enrolledStudents?.length || 0} Students
+                      </span>
+                    </div>
                     <span className="px-2 py-1 text-xs font-medium rounded-full bg-background text-primary capitalize">
                       {course.level}
                     </span>

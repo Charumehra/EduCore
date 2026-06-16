@@ -33,6 +33,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         icon: BookOpen,
       },
       {
+        name: "Assignments",
+        path: "/assignments",
+        icon: BookOpen,
+      },
+      {
         name: "Profile",
         path: "/profile",
         icon: User,
