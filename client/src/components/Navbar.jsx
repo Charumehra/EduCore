@@ -4,7 +4,18 @@ import logo from "../assets/logo.png";
 
 const Navbar = ({ setIsOpen }) => {
   const { user } = useSelector((state) => state.auth);
+  
+const handleProfileClick = () => {
+  if (!user) return;
 
+  if (user.role === "student") {
+    window.location.href = "/student/profile";
+  } else if (user.role === "instructor") {
+    window.location.href = "/instructor/profile";
+  } else if (user.role === "admin") {
+    window.location.href = "/admin/profile";
+  }
+};
   return (
     <div className="w-full  h-14 bg-white shadow fixed top-0 left-0 z-30">
       {user ? (
@@ -25,7 +36,10 @@ const Navbar = ({ setIsOpen }) => {
             </h1>
           </div>
 
-          <button className="w-7.5 h-7.5  outline-2 outline-primary rounded-full bg-white text-primary flex items-center justify-center font-semibold">
+          <button 
+            onClick={handleProfileClick}
+            className="w-7.5 h-7.5  outline-2 outline-primary rounded-full bg-white text-primary flex items-center justify-center font-semibold"
+          >
             {user.name[0].toUpperCase()}
           </button>
         </div>
