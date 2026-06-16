@@ -16,15 +16,18 @@ import PaymentSuccess from "./pages/student/PaymentSuccess";
 
 import ProtectedRoute from "./routes/ProtectedRoutes";
 import RoleRoute from "./routes/RoleRoute";
+import PublicRoute from "./routes/PublicRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<PublicRoute><Home /> </PublicRoute>} />
+          
+          <Route path="/login" element={<PublicRoute><Login /> </PublicRoute>} />
+         
+          <Route path="/register" element={ <PublicRoute> <Register /> </PublicRoute>} />
 
           <Route
             path="/dashboard"
@@ -36,7 +39,7 @@ const App = () => {
           />
           <Route path="/course/:id" element={<CourseDetails />} />
 
-          <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
 
           <Route
             path="/instructor/dashboard"
