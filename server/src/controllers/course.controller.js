@@ -122,12 +122,12 @@ const getCourseById = async (req, res) => {
   }
 };
 
+// Enroll in a course
 const enrollCourse = async (req, res) => {
   try {
     const { id } = req.params;
     const studentId = req.user.id;
 
-    // Only students can enroll
     if (req.user.role !== "student") {
       return res.status(403).json({
         success: false,
@@ -159,6 +159,12 @@ const enrollCourse = async (req, res) => {
 
     await course.save();
 
+    await User.findByIdAndUpdate(studentId, {
+      $addToSet: {
+        enrolledCourses: course._id,
+      },
+    });
+
     return res.status(200).json({
       success: true,
       message: "Enrollment successful",
@@ -171,11 +177,12 @@ const enrollCourse = async (req, res) => {
   }
 };
 
+// Get enrolled students for a course
 const getEnrolledStudents = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id).populate(
       "enrolledStudents",
-      "name email role",
+      "name email role courses",
     );
 
     if (!course) {
@@ -209,15 +216,17 @@ const getEnrolledStudents = async (req, res) => {
 
 const getMyCourses = async (req, res) => {
   try {
-    const studentId = req.user.id;
-
-    const courses = await Course.find({
-      enrolledStudents: studentId,
-    }).populate("owner", "name");
+    const student = await User.findById(req.user.id).populate({
+      path: "enrolledCourses",
+      populate: {
+        path: "owner",
+        select: "name",
+      },
+    });
 
     return res.status(200).json({
       success: true,
-      courses,
+      courses: student.enrolledCourses || [],
     });
   } catch (error) {
     return res.status(500).json({
@@ -229,8 +238,7 @@ const getMyCourses = async (req, res) => {
 
 const getCourseForLearning = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id)
-      .populate("lectures");
+    const course = await Course.findById(req.params.id).populate("lectures");
 
     if (!course) {
       return res.status(404).json({
@@ -240,7 +248,7 @@ const getCourseForLearning = async (req, res) => {
     }
 
     const isEnrolled = course.enrolledStudents.some(
-      (student) => student.toString() === req.user.id
+      (student) => student.toString() === req.user.id,
     );
 
     if (
@@ -276,5 +284,4 @@ module.exports = {
   getEnrolledStudents,
   getMyCourses,
   getCourseForLearning,
-
 };
