@@ -14,7 +14,6 @@ const StudentDashboard = () => {
 
   const { courses, myCourses } = useSelector((state) => state.course);
 
-  // FETCH MY COURSES (ENROLLED)
   const fetchMyCourses = async () => {
     try {
       const res = await api.get("/courses/my-courses");
@@ -24,7 +23,6 @@ const StudentDashboard = () => {
     }
   };
 
-  // FETCH ALL COURSES
   const fetchAllCourses = async () => {
     try {
       const res = await api.get("/courses/all-courses");
@@ -42,21 +40,15 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
-
-        {/* HEADER */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-primary">
-            Student Dashboard
-          </h1>
+          <h1 className="text-3xl font-bold text-primary">Student Dashboard</h1>
 
           <p className="text-gray-700 mt-2">
             Track your learning progress and explore new courses.
           </p>
         </div>
 
-        {/* STATS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
-
           <div className="bg-white rounded-2xl shadow-md p-5 border-l-4 border-primary">
             <h3 className="text-gray-500 text-sm">Enrolled Courses</h3>
             <p className="text-3xl font-bold text-primary mt-2">
@@ -70,14 +62,10 @@ const StudentDashboard = () => {
               {courses.length}
             </p>
           </div>
-
         </div>
 
-        {/* MY COURSES */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold text-primary">
-            My Courses
-          </h2>
+          <h2 className="text-2xl font-semibold text-primary">My Courses</h2>
 
           <span className="bg-white px-4 py-2 rounded-full text-sm text-primary font-medium shadow">
             {myCourses.length}
@@ -95,13 +83,11 @@ const StudentDashboard = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
-
             {myCourses.map((course) => (
               <div
                 key={course._id}
                 className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition flex flex-col"
               >
-
                 <img
                   src={course.thumbnail}
                   alt={course.title}
@@ -109,7 +95,6 @@ const StudentDashboard = () => {
                 />
 
                 <div className="p-4 flex flex-col flex-1">
-
                   <h3 className="text-lg font-bold text-primary line-clamp-2">
                     {course.title}
                   </h3>
@@ -131,15 +116,12 @@ const StudentDashboard = () => {
                   >
                     Continue Learning
                   </button>
-
                 </div>
               </div>
             ))}
-
           </div>
         )}
 
-        {/* EXPLORE COURSES */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-semibold text-primary">
             Explore Courses
@@ -158,13 +140,11 @@ const StudentDashboard = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-
             {courses.map((course) => (
               <div
                 key={course._id}
                 className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition flex flex-col"
               >
-
                 <img
                   src={course.thumbnail}
                   alt={course.title}
@@ -172,7 +152,6 @@ const StudentDashboard = () => {
                 />
 
                 <div className="p-4 flex flex-col flex-1">
-
                   <h3 className="text-lg font-bold text-primary line-clamp-2">
                     {course.title}
                   </h3>
@@ -196,14 +175,11 @@ const StudentDashboard = () => {
                   >
                     View Course
                   </button>
-
                 </div>
               </div>
             ))}
-
           </div>
         )}
-
       </div>
     </div>
   );

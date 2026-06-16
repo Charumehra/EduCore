@@ -25,9 +25,9 @@ const Navbar = ({ setIsOpen }) => {
             </h1>
           </div>
 
-          <div className="w-7.5 h-7.5  outline-2 outline-primary rounded-full bg-white text-primary flex items-center justify-center font-semibold">
+          <button className="w-7.5 h-7.5  outline-2 outline-primary rounded-full bg-white text-primary flex items-center justify-center font-semibold">
             {user.name[0].toUpperCase()}
-          </div>
+          </button>
         </div>
       ) : (
         <div className="h-full flex items-center justify-between px-4">

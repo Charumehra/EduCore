@@ -14,8 +14,14 @@ import AdminProfile from "./pages/admin/AdminProfile";
 import CourseDetails from "./pages/student/CourseDetail";
 import PaymentSuccess from "./pages/student/PaymentSuccess";
 import MyCourses from "./pages/student/MyCourses";
+import StudentProfile from "./pages/student/StudentProfile";
+import CreateCourse from "./pages/admin/CreateCourse";
+import InstructorCreateCourse from "./pages/instructor/InstructorCreateCourse";
+import InstructorCourses from "./pages/instructor/InstructorCourses";
+import InstructorProfile from "./pages/instructor/InstructorProfile";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import StudentAssignment from "./pages/student/StudentAssignment";
 
-import ProtectedRoute from "./routes/ProtectedRoutes";
 import RoleRoute from "./routes/RoleRoute";
 import PublicRoute from "./routes/PublicRoute";
 
@@ -24,34 +30,123 @@ const App = () => {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<PublicRoute><Home /> </PublicRoute>} />
-          
-          <Route path="/login" element={<PublicRoute><Login /> </PublicRoute>} />
-         
-          <Route path="/register" element={ <PublicRoute> <Register /> </PublicRoute>} />
-
           <Route
-            path="/dashboard"
+            path="/"
             element={
-              <ProtectedRoute>
-                <StudentDashboard />
-              </ProtectedRoute>
+              <PublicRoute>
+                <Home />{" "}
+              </PublicRoute>
             }
           />
-          <Route path="/course/:id" element={<CourseDetails />} />
 
-          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />{" "}
+              </PublicRoute>
+            }
+          />
 
-          <Route path="/my-courses" element={<MyCourses />} />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                {" "}
+                <Register />{" "}
+              </PublicRoute>
+            }
+          />
+
+          <Route
+            path="/student/dashboard"
+            element={
+              <RoleRoute allowedRoles={["student"]}>
+                <StudentDashboard />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/student/my-courses"
+            element={
+              <RoleRoute allowedRoles={["student"]}>
+                <MyCourses />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/student/profile"
+            element={
+              <RoleRoute allowedRoles={["student"]}>
+                <StudentProfile />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/course/:id"
+            element={
+              <RoleRoute allowedRoles={["student"]}>
+                <CourseDetails />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/payment-success"
+            element={
+              <RoleRoute allowedRoles={["student"]}>
+                <PaymentSuccess />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/student/assignments"
+            element={
+              <RoleRoute allowedRoles={["student"]}>
+                <StudentAssignment />
+              </RoleRoute>
+            }
+          />
 
           <Route
             path="/instructor/dashboard"
             element={
-              <RoleRoute allowedRoles={["instructor", "admin"]}>
+              <RoleRoute allowedRoles={["instructor"]}>
                 <InstructorDashboard />
               </RoleRoute>
             }
           />
+          <Route
+            path="/instructor/create-course"
+            element={
+              <RoleRoute allowedRoles={["instructor"]}>
+                <InstructorCreateCourse />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/instructor/courses"
+            element={
+              <RoleRoute allowedRoles={["instructor"]}>
+                <InstructorCourses />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/instructor/profile"
+            element={
+              <RoleRoute allowedRoles={["instructor"]}>
+                <InstructorProfile />
+              </RoleRoute>
+            }
+          />
+
+      
 
           <Route
             path="/admin/dashboard"
@@ -70,6 +165,23 @@ const App = () => {
               </RoleRoute>
             }
           />
+          <Route
+            path="/admin/create-course"
+            element={
+              <RoleRoute allowedRoles={["admin"]}>
+                <CreateCourse />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/admin/analytics"
+            element={
+              <RoleRoute allowedRoles={["admin"]}>
+                <AdminAnalytics />
+              </RoleRoute>
+            }
+          />
+
           <Route
             path="/admin/profile"
             element={

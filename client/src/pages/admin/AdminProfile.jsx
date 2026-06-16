@@ -15,7 +15,7 @@ const AdminProfile = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
-        {/* Header */}
+    
         <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-primary">
             Admin Profile
@@ -26,7 +26,6 @@ const AdminProfile = () => {
           </p>
         </div>
 
-        {/* Profile Card */}
         <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
           <div className="flex flex-col sm:flex-row items-center gap-5">
             <div className="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center text-3xl font-bold">
@@ -45,7 +44,6 @@ const AdminProfile = () => {
           </div>
         </div>
 
-        {/* Statistics */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
           <div className="bg-white rounded-2xl shadow-md p-5 border-l-4 border-primary">
             <h3 className="text-gray-500 text-sm">Total Courses Created</h3>
@@ -70,7 +68,6 @@ const AdminProfile = () => {
           </div>
         </div>
 
-        {/* Recent Courses */}
         <div className="bg-white rounded-2xl shadow-md p-6">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-xl font-semibold text-primary">

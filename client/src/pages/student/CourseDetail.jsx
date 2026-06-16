@@ -33,16 +33,16 @@ const CourseDetails = () => {
   }, [id, selectedCourse]);
 
   const handleBuyCourse = async () => {
-  try {
-    const res = await api.post("/stripe/checkout", {
-      courseId: course._id,
-    });
+    try {
+      const res = await api.post("/stripe/checkout", {
+        courseId: course._id,
+      });
 
-    window.location.href = res.data.url; // redirect to Stripe
-  } catch (error) {
-    console.log(error);
-  }
-};
+      window.location.href = res.data.url; // redirect to Stripe
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-3">
@@ -92,11 +92,8 @@ const CourseDetails = () => {
           </span>
         </button>
 
-        {/* Responsive Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.8fr_1.2fr] gap-6 lg:gap-8 items-start">
-          {/* Polished Left Content Div Wrapper */}
           <div className="w-full bg-slate-50/60 p-4 md:p-6 rounded-3xl border border-slate-100 space-y-6">
-            {/* Thumbnail Header */}
             <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden border border-slate-200/60 shadow-sm group">
               <img
                 src={course.thumbnail}
@@ -106,7 +103,6 @@ const CourseDetails = () => {
               <div className="absolute inset-0 bg-linear-to-t from-slate-950/30 via-transparent to-transparent" />
             </div>
 
-            {/* Course Information Card */}
             <div className="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-100">
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="inline-flex items-center gap-1.5 bg-slate-55 text-slate-600 px-3 py-1 rounded-full text-xs font-medium border border-slate-100">
@@ -129,10 +125,8 @@ const CourseDetails = () => {
             </div>
           </div>
 
-          {/* Right Pricing/Overview Card Container */}
           <div className="w-full lg:sticky lg:top-8">
             <div className="bg-white rounded-2xl md:rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/40 p-5 md:p-6 overflow-hidden relative">
-              {/* Top Accent Line */}
               <div className="absolute top-0 inset-x-0 h-1.5 bg-primary" />
 
               <div className="mb-6">
@@ -171,7 +165,10 @@ const CourseDetails = () => {
                 </div>
               </div>
 
-              <button  onClick={handleBuyCourse} className="w-full bg-primary hover:bg-primary-hover text-white py-3.5 rounded-xl font-semibold shadow-md shadow-primary/10 transition-all active:scale-[0.98]">
+              <button
+                onClick={handleBuyCourse}
+                className="w-full bg-primary hover:bg-primary-hover text-white py-3.5 rounded-xl font-semibold shadow-md shadow-primary/10 transition-all active:scale-[0.98]"
+              >
                 Enroll Now
               </button>
 

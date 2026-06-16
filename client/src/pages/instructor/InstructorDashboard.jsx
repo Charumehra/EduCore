@@ -53,7 +53,6 @@ const InstructorDashboard = () => {
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
 
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary">
             Instructor Dashboard
@@ -64,7 +63,6 @@ const InstructorDashboard = () => {
           </p>
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
 
           <div className="bg-white rounded-2xl shadow-md p-5 border-l-4 border-primary">
@@ -99,7 +97,6 @@ const InstructorDashboard = () => {
 
         </div>
 
-        {/* My Courses */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-primary">
             My Courses
@@ -157,7 +154,6 @@ const InstructorDashboard = () => {
           </div>
         )}
 
-        {/* All Courses */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-primary">
             All Courses

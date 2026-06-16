@@ -21,6 +21,10 @@ const courseSlice = createSlice({
     setSelectedCourse: (state, action) => {
       state.selectedCourse = action.payload;
     },
+
+    addCourse: (state, action) => {
+      state.courses.unshift(action.payload);
+    },
   },
 });
 
@@ -28,6 +32,7 @@ export const {
   setCourses,
   setMyCourses,
   setSelectedCourse,
+  addCourse,
 } = courseSlice.actions;
 
 export default courseSlice.reducer;

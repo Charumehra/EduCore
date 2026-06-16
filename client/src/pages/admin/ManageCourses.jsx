@@ -77,7 +77,7 @@ const ManageCourses = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
-        {/* Header */}
+  
         <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-primary">
             Manage Courses
@@ -88,7 +88,7 @@ const ManageCourses = () => {
           </p>
         </div>
 
-        {/* Search */}
+   
         <div className="relative mb-8">
           <Search
             size={18}
@@ -106,7 +106,7 @@ const ManageCourses = () => {
           />
         </div>
 
-        {/* Empty State */}
+   
         {filteredCourses.length === 0 ? (
           <div className="bg-white rounded-2xl p-10 text-center shadow">
             <h2 className="text-xl font-semibold text-primary">
@@ -218,8 +218,7 @@ const ManageCourses = () => {
           </div>
         )}
       </div>
-
-      {/* Delete Modal */}
+      
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">

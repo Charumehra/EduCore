@@ -24,22 +24,22 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     student: [
       {
         name: "Dashboard",
-        path: "/dashboard",
+        path: "/student/dashboard",
         icon: Home,
       },
       {
         name: "My Courses",
-        path: "/my-courses",
+        path: "/student/my-courses",
         icon: BookOpen,
       },
       {
         name: "Assignments",
-        path: "/assignments",
+        path: "/student/assignments",
         icon: BookOpen,
       },
       {
         name: "Profile",
-        path: "/profile",
+        path: "/student/profile",
         icon: User,
       },
     ],
@@ -52,7 +52,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       },
       {
         name: "Create Course",
-        path: "/create-course",
+        path: "/instructor/create-course",
         icon: PlusCircle,
       },
       {
@@ -60,14 +60,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         path: "/instructor/courses",
         icon: BookOpen,
       },
-      {
-        name: "Enrolled Students",
-        path: "/instructor/students",
-        icon: Users,
-      },
+      // {
+      //   name: "Enrolled Students",
+      //   path: "/instructor/students",
+      //   icon: Users,
+      // },
       {
         name: "Profile",
-        path: "/profile",
+        path: "/instructor/profile",
         icon: User,
       },
     ],
@@ -79,9 +79,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         icon: Home,
       },
       {
-        name: "Manage Users",
-        path: "/admin/users",
-        icon: Users,
+        name: "Create Course",
+        path: "/admin/create-course",
+        icon: PlusCircle,
       },
       {
         name: "Manage Courses",
@@ -89,8 +89,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         icon: BookOpen,
       },
       {
+        name: "Manage Students",
+        path: "/admin/students",
+        icon: Users,
+      },
+      {
         name: "Analytics",
-        path: "/analytics",
+        path: "/admin/analytics",
         icon: BarChart3,
       },
       {

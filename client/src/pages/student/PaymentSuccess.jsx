@@ -14,17 +14,13 @@ const PaymentSuccess = () => {
   useEffect(() => {
     const enrollAndSync = async () => {
       try {
-        // 1. Enroll user
         await api.post(`/courses/${courseId}/enroll`, {
           courseId,
         });
 
-        // 2. Fetch updated enrolled courses
         const res = await api.get("/courses/my-courses");
 
-        // 3. Save in Redux
         dispatch(setMyCourses(res.data.courses));
-
       } catch (err) {
         console.log(err);
       }
@@ -38,9 +34,7 @@ const PaymentSuccess = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="bg-white p-8 rounded-2xl shadow text-center">
-        <h1 className="text-2xl font-bold text-primary">
-          Payment Successful
-        </h1>
+        <h1 className="text-2xl font-bold text-primary">Payment Successful</h1>
 
         <p className="text-gray-600 mt-2">
           You are now enrolled in this course.

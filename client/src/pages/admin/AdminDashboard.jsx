@@ -100,7 +100,6 @@ const AdminDashboard = () => {
                   />
                 </div>
 
-                {/* Content */}
                 <div className="p-3 sm:p-4 lg:p-5 flex flex-col flex-1">
                   <h3 className="text-base sm:text-lg font-bold text-primary line-clamp-2 min-h-12">
                     {course.title}

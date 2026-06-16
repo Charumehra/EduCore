@@ -10,8 +10,8 @@ const PublicRoute = ({ children }) => {
 
   if (role === "admin") return <Navigate to="/admin/dashboard" />;
   if (role === "instructor") return <Navigate to="/instructor/dashboard" />;
-
-  return <Navigate to="/dashboard" />;
+    if (role === "student") return <Navigate to="/student/dashboard" />;
+  return <Navigate to="/home" />;
 };
 
 export default PublicRoute;
