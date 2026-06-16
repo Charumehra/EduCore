@@ -10,6 +10,7 @@ import {
   PlusCircle,
   Users,
   BarChart3,
+  SquarePen,
 } from "lucide-react";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
@@ -28,14 +29,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         icon: Home,
       },
       {
-        name: "My Courses",
+        name: "My Learning",
         path: "/student/my-courses",
         icon: BookOpen,
       },
       {
         name: "Assignments",
         path: "/student/assignments",
-        icon: BookOpen,
+        icon: SquarePen ,
       },
       {
         name: "Profile",

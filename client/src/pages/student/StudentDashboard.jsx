@@ -65,7 +65,7 @@ const StudentDashboard = () => {
         </div>
 
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold text-primary">My Courses</h2>
+          <h2 className="text-2xl font-semibold text-primary">My Learning</h2>
 
           <span className="bg-white px-4 py-2 rounded-full text-sm text-primary font-medium shadow">
             {myCourses.length}

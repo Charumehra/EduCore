@@ -35,6 +35,7 @@ try {
   const res = await api.post("/auth/login", formData);
 
   dispatch(setUser(res.data.user));
+  localStorage.setItem("user", JSON.stringify(res.data.user));
 
   const role = res.data.user.role;
 
