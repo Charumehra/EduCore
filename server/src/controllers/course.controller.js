@@ -4,6 +4,7 @@ const {
   uploadVideo,
   deleteMedia,
 } = require("../services/storage.service");
+const User = require("../models/user");
 
 // Create a new course
 const createCourse = async (req, res) => {
