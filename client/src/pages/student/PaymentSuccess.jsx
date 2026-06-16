@@ -36,7 +36,7 @@ const PaymentSuccess = () => {
         </p>
 
         <button
-          onClick={() => navigate("/student/dashboard")}
+          onClick={() => navigate("/dashboard")}
           className="mt-5 bg-primary text-white px-6 py-2 rounded-xl"
         >
           Go to Dashboard
