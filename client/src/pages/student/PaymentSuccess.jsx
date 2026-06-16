@@ -28,7 +28,7 @@ const PaymentSuccess = () => {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="bg-white p-8 rounded-2xl shadow text-center">
         <h1 className="text-2xl font-bold text-primary">
-          Payment Successful 🎉
+          Payment Successful
         </h1>
 
         <p className="text-gray-600 mt-2">
