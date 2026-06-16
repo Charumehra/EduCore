@@ -45,8 +45,10 @@ const Register = () => {
         navigate("/admin/dashboard");
       } else if (role === "instructor") {
         navigate("/instructor/dashboard");
-      } else {
+      } else if (role === "student") {
         navigate("/student/dashboard");
+      } else {
+        navigate("/");
       }
     } catch (err) {
       toast.error(err?.response?.data?.message || "Registration failed");

@@ -43,8 +43,10 @@ try {
     navigate("/admin/dashboard");
   } else if (role === "instructor") {
     navigate("/instructor/dashboard");
-  } else {
+  } else if (role === "student") {
     navigate("/student/dashboard");
+  } else {
+    navigate("/");
   }
   
   toast.success("Login Successful");
