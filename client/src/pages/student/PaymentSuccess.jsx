@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import api from "../../services/api";
 import { setMyCourses } from "../../redux/slices/courseSlice";
+import { toast } from "react-toastify";
 
 const PaymentSuccess = () => {
+  const [enrolled, setEnrolled] = useState(false);
+  const [error, setError] = useState("");
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,8 +24,13 @@ const PaymentSuccess = () => {
         const res = await api.get("/courses/my-courses");
 
         dispatch(setMyCourses(res.data.courses));
+
+        setEnrolled(true);
       } catch (err) {
-        console.log(err);
+        const message = err?.response?.data?.message || "Enrollment failed.";
+
+        setError(message);
+        toast.error(message);
       }
     };
 
@@ -34,11 +42,25 @@ const PaymentSuccess = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="bg-white p-8 rounded-2xl shadow text-center">
-        <h1 className="text-2xl font-bold text-primary">Payment Successful</h1>
+        {enrolled ? (
+          <>
+            <h1 className="text-2xl font-bold text-green-600">
+              Payment Successful
+            </h1>
 
-        <p className="text-gray-600 mt-2">
-          You are now enrolled in this course.
-        </p>
+            <p className="text-gray-600 mt-2">
+              You are now enrolled in this course.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="text-2xl font-bold text-red-600">
+              Enrollment Failed
+            </h1>
+
+            <p className="text-gray-600 mt-2">{error}</p>
+          </>
+        )}
 
         <button
           onClick={() => navigate("/student/dashboard")}
