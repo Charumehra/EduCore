@@ -3,7 +3,13 @@ import { User, Mail, ShieldCheck, BookOpen } from "lucide-react";
 
 const InstructorProfile = () => {
   const { user } = useSelector((state) => state.auth);
+   const { myCourses } = useSelector((state) => state.course);
 
+  const totalStudents = myCourses?.reduce(
+    (total, course) =>
+      total + (course.enrolledStudents?.length || 0),
+    0
+  );
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
@@ -54,9 +60,9 @@ const InstructorProfile = () => {
                   <div className="flex items-center gap-3">
                     <BookOpen className="text-primary" />
                     <div>
-                      <p className="text-gray-500 text-sm">Courses</p>
+                      <p className="text-gray-500 text-sm">My Created Courses</p>
 
-                      <h3 className="text-2xl font-bold text-primary">--</h3>
+                      <h3 className="text-2xl font-bold text-primary">{myCourses?.length || 0}</h3>
                     </div>
                   </div>
                 </div>
@@ -65,9 +71,9 @@ const InstructorProfile = () => {
                   <div className="flex items-center gap-3">
                     <User className="text-primary" />
                     <div>
-                      <p className="text-gray-500 text-sm">Students</p>
+                      <p className="text-gray-500 text-sm">Enrolled Students in My Courses</p>
 
-                      <h3 className="text-2xl font-bold text-primary">--</h3>
+                      <h3 className="text-2xl font-bold text-primary">{totalStudents}</h3>
                     </div>
                   </div>
                 </div>

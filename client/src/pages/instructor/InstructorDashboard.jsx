@@ -5,6 +5,7 @@ import {
   setCourses,
   setMyCourses,
 } from "../../redux/slices/courseSlice";
+import { User } from "lucide-react";
 
 const InstructorDashboard = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const InstructorDashboard = () => {
 
   const fetchMyCourses = async () => {
     try {
-      const res = await api.get("/courses/my-courses");
+      const res = await api.get("/courses/my-created-courses");
 
       dispatch(setMyCourses(res.data.courses || []));
     } catch (error) {
@@ -140,9 +141,12 @@ const InstructorDashboard = () => {
                   </p>
 
                   <div className="mt-auto pt-4 flex justify-between">
-                    <span className="text-sm text-gray-700">
-                      👨‍🎓 {course.enrolledStudents?.length || 0}
-                    </span>
+                    <div className="flex items-center justify-end gap-1 text-sm text-gray-600">
+                      <User size={16} />
+                      <span>
+                        {course.enrolledStudents?.length || 0} Students
+                      </span>
+                    </div>
 
                     <span className="px-3 py-1 text-xs rounded-full bg-background text-primary capitalize">
                       {course.level}

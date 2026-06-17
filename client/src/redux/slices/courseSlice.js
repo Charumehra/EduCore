@@ -25,14 +25,22 @@ const courseSlice = createSlice({
     addCourse: (state, action) => {
       state.courses.unshift(action.payload);
     },
+    removeCourse: (state, action) => {
+      state.courses = state.courses.filter(
+        (course) => course._id !== action.payload,
+      );
+    },
+    updateCourse: (state, action) => {
+  const updatedCourse = action.payload;
+
+  state.courses = state.courses.map((course) =>
+    course._id === updatedCourse._id ? updatedCourse : course
+  );
+},
   },
 });
 
-export const {
-  setCourses,
-  setMyCourses,
-  setSelectedCourse,
-  addCourse,
-} = courseSlice.actions;
+export const { setCourses, setMyCourses, setSelectedCourse, addCourse, removeCourse, updateCourse } =
+  courseSlice.actions;
 
 export default courseSlice.reducer;
