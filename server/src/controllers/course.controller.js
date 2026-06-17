@@ -275,6 +275,23 @@ const getCourseForLearning = async (req, res) => {
   }
 };
 
+const getMyCreatedCourses = async (req, res) => {
+  try {
+    const courses = await Course.find({ owner: req.user.id });
+
+    return res.status(200).json({
+      success: true,
+      totalCourses: courses.length,
+      courses,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createCourse,
   updateCourse,
@@ -284,5 +301,6 @@ module.exports = {
   enrollCourse,
   getEnrolledStudents,
   getMyCourses,
+  getMyCreatedCourses,
   getCourseForLearning,
 };
