@@ -71,7 +71,7 @@ const InstructorProfile = () => {
                   <div className="flex items-center gap-3">
                     <User className="text-primary" />
                     <div>
-                      <p className="text-gray-500 text-sm">Enrolled Students in My Courses</p>
+                      <p className="text-gray-500 text-sm">Enrolled Students in My Created Courses</p>
 
                       <h3 className="text-2xl font-bold text-primary">{totalStudents}</h3>
                     </div>

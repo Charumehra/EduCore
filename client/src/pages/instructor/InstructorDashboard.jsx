@@ -68,7 +68,7 @@ const InstructorDashboard = () => {
 
           <div className="bg-white rounded-2xl shadow-md p-5 border-l-4 border-primary">
             <h3 className="text-gray-500 text-sm">
-              My Courses
+              My Created Courses
             </h3>
 
             <p className="text-3xl font-bold text-primary mt-2">
@@ -78,7 +78,7 @@ const InstructorDashboard = () => {
 
           <div className="bg-white rounded-2xl shadow-md p-5 border-l-4 border-primary">
             <h3 className="text-gray-500 text-sm">
-              Total Students
+              Enrolled Students in My Created Courses
             </h3>
 
             <p className="text-3xl font-bold text-primary mt-2">
