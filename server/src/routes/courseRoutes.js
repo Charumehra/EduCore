@@ -3,14 +3,16 @@ const {createCourse,getAllCourses,getCourseById,updateCourse,deleteCourse,enroll
 const { authMiddleware } = require("../middlewares/auth.middleware");
 const {authorizeRoles,authorizeOwnership,} = require("../middlewares/authorizeRoles.middleware");
 const upload = require("../middlewares/upload.middleware");
+const { createCourseSchema , updateCourseSchema} = require("../validators/courseValidation");
+const {validate} = require("../middlewares/validate");
 
 const router = express.Router();
 
 
-router.post("/create-course", authMiddleware, authorizeRoles,upload.single("thumbnail"), createCourse);
+router.post("/create-course", authMiddleware, authorizeRoles, validate(createCourseSchema),upload.single("thumbnail"),   createCourse);
 router.get("/all-courses", authMiddleware, getAllCourses);
 router.get("/course/:id", authMiddleware, authorizeOwnership, getCourseById);
-router.put("/update-course/:id",authMiddleware,authorizeRoles,authorizeOwnership,updateCourse,);
+router.put("/update-course/:id",authMiddleware,authorizeRoles,authorizeOwnership,validate(updateCourseSchema),updateCourse,);
 router.delete("/delete-course/:id",authMiddleware,authorizeRoles,authorizeOwnership,deleteCourse,);
 
 
