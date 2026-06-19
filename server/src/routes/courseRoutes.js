@@ -4,7 +4,7 @@ const { authMiddleware } = require("../middlewares/auth.middleware");
 const {authorizeRoles,authorizeOwnership,} = require("../middlewares/authorizeRoles.middleware");
 const upload = require("../middlewares/upload.middleware");
 const { createCourseSchema , updateCourseSchema} = require("../validators/courseValidation");
-const {validate} = require("../middlewares/validate");
+const validate = require("../middlewares/validate");
 
 const router = express.Router();
 
