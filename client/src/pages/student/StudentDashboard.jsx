@@ -19,7 +19,9 @@ const StudentDashboard = () => {
       const res = await api.get("/courses/my-courses");
       dispatch(setMyCourses(res.data.courses || []));
     } catch (err) {
-      console.log(err);
+      toast.error(
+        err.response?.data?.message || "Failed to fetch your courses. Please try again later."
+      );
     }
   };
 
@@ -28,7 +30,9 @@ const StudentDashboard = () => {
       const res = await api.get("/courses/all-courses");
       dispatch(setCourses(res.data.courses || []));
     } catch (err) {
-      console.log(err);
+      toast.error(
+        err.response?.data?.message || "Failed to fetch available courses. Please try again later."
+      );
     }
   };
 

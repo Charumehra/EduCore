@@ -39,7 +39,6 @@ const Register = () => {
       toast.success(res.data?.message || "Registration successful 🎉");
 
       const role = res.data.user.role;
-      console.log("User role:", role);
 
       if (role === "admin") {
         navigate("/admin/dashboard");

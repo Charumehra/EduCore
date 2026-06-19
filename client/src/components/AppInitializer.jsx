@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import api from "../services/api";
 import { setUser, setLoading } from "../redux/slices/authSlice";
+import { toast } from "react-toastify";
 
 const AppInitializer = ({ children }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const AppInitializer = ({ children }) => {
     if (err.response?.status === 401) {
       dispatch(setUser(null));
     } else {
-      console.error("Error loading user:", err);
+      toast.error("Failed to load user information.");
     }
   } finally {
     dispatch(setLoading(false));

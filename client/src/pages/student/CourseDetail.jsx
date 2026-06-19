@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ArrowLeft, Layers, Tag, IndianRupee } from "lucide-react";
 import api from "../../services/api";
+import { toast } from "react-toastify";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -18,7 +19,8 @@ const CourseDetails = () => {
       const res = await api.get(`/${id}/learn`);
       setCourse(res.data.course);
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to fetch course details. Please try again later.");
+
     } finally {
       setLoading(false);
     }
@@ -40,7 +42,9 @@ const CourseDetails = () => {
 
       window.location.href = res.data.url; // redirect to Stripe
     } catch (error) {
-      console.log(error);
+      toast.error(
+        error.response?.data?.message || "Failed to initiate checkout. Please try again later."
+      );
     }
   };
   if (loading) {

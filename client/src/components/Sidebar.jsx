@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import api from "../services/api";
 import { setUser } from "./../redux/slices/authSlice";
 import logo from "../assets/logo.png";
+import { toast } from "react-toastify";
 import {
   Home,
   BookOpen,
@@ -119,7 +120,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      toast.error(error.response?.data?.message ||"Logout failed. Please try again.");
     }
   };
 

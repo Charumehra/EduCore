@@ -1,8 +1,6 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI(
-  process.env.GEMINI_API_KEY
-);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const generateSuggestion = async (req, res) => {
   try {
@@ -20,10 +18,7 @@ const generateSuggestion = async (req, res) => {
       success: true,
       suggestion: response,
     });
-
   } catch (error) {
-    console.error(error);
-
     res.status(500).json({
       success: false,
       message: "AI generation failed",

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import { setMyCourses } from "../../redux/slices/courseSlice";
+import { toast } from "react-toastify";
 
 const MyCourses = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const MyCourses = () => {
       const res = await api.get("/courses/my-courses");
       dispatch(setMyCourses(res.data.courses || []));
     } catch (err) {
-      console.log(err);
+      toast.error(err.response?.data?.message || "Failed to fetch courses");
     }
   };
 

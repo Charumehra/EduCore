@@ -61,7 +61,7 @@ const CreateCourse = () => {
 
       navigate("/admin/courses");
     } catch (error) {
-      console.log(error);
+     toast.error(error.response?.data?.message || "Failed to create course");
 
       toast.error(error.response?.data?.message || "Failed to create course");
     } finally {
@@ -85,8 +85,7 @@ const CreateCourse = () => {
         description: data,
       }));
     } catch (error) {
-      console.log(error);
-      toast.error("Failed to generate description");
+      toast.error(error.response?.data?.message || "Failed to generate description");
     } finally {
       setGenerating(false);
     }
