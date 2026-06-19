@@ -122,7 +122,13 @@ const getUserInfo = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
 
-    return res.status(200).json({message: "User information retrieved successfully", success: true, user });
+    return res
+      .status(200)
+      .json({
+        message: "User information retrieved successfully",
+        success: true,
+        user,
+      });
   } catch (error) {
     return res.status(500).json({ message: "Server error" });
   }

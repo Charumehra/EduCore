@@ -105,11 +105,11 @@ const CourseDetails = () => {
 
             <div className="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-100">
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 bg-slate-55 text-slate-600 px-3 py-1 rounded-full text-xs font-medium border border-slate-100">
+                <span className="inline-flex items-center gap-1.5 bg-slate-50 text-slate-600 px-3 py-1 rounded-full text-xs font-medium border border-slate-100">
                   <Tag size={12} />
                   {course.category}
                 </span>
-                <span className="inline-flex items-center gap-1.5 bg-slate-55 text-slate-600 px-3 py-1 rounded-full text-xs font-medium capitalize border border-slate-100">
+                <span className="inline-flex items-center gap-1.5 bg-slate-50 text-slate-600 px-3 py-1 rounded-full text-xs font-medium capitalize border border-slate-100">
                   <Layers size={12} />
                   {course.level}
                 </span>
