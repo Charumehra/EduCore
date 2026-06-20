@@ -7,7 +7,7 @@ const registerUser = async (req, res) => {
   const { name, email, password , role} = req.body;
 
   try {
-    if (!name || !email || !password ) {
+    if (!name || !email || !password || !role) {
       return res.status(400).json({
         message: "All fields are required",
       });
@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role,
+      role: role || "student",
     });
     const token = jwt.sign(
       {
