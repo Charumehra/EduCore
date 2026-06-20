@@ -67,24 +67,24 @@ const InstructorCreateCourse = () => {
     }
   };
 
-  const handleGenerateDescription = async () => {
-    setGenerating(true);
-    if (!formData.title) {
-      toast.error("Please enter a course title first");
-      setGenerating(false);
+ const handleGenerateDescription = async () => {
+    if (!formData.title.trim()) {
+      toast.warning("Please enter a course title first");
       return;
     }
+
     try {
       setGenerating(true);
+
       const data = await generateCourseDescription(formData.title);
 
-      setFormData({
-        ...formData,
+      setFormData((prev) => ({
+        ...prev,
         description: data,
-      });
+      }));
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to generate description");
-    }finally {
+    } finally {
       setGenerating(false);
     }
   };

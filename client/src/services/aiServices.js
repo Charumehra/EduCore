@@ -6,8 +6,8 @@ export const generateCourseDescription = async (title) => {
 Create a professional LMS course description for "${title}".
 
 Requirements:
-- 2-3 sentences only.
-- Maximum 60 words.
+- 2 sentences only.
+- Maximum 40 words.
 - Explain what students will learn.
 - Professional and beginner-friendly tone.
 - Return only the description text.
