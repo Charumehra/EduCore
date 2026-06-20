@@ -14,7 +14,7 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    role: "",
+    role: "student",
   });
 
   const [loading, setLoading] = useState(false);
@@ -29,6 +29,10 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.role) {
+      toast.error("Please select a role");
+      return;
+    }
 
     try {
       setLoading(true);
