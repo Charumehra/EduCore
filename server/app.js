@@ -11,7 +11,7 @@ const cors = require("cors");
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://prodesk-capstone-edu-core-git-main-charumehras-projects.vercel.app",
+    "https://prodesk-capstone-edu-core-charumehras-projects.vercel.app",
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
