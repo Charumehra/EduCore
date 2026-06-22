@@ -4,7 +4,7 @@ const { uploadVideo, deleteMedia } = require("../services/storage.service");
 
 const addLecture = async (req, res) => {
   try {
-    const { title, duration } = req.body;
+    const { title, duration , description} = req.body;
 
     const course = await Course.findById(req.params.courseId);
 
@@ -20,6 +20,7 @@ const addLecture = async (req, res) => {
     const lecture = await Lecture.create({
       title,
       duration,
+      description,
       videoUrl: videoData.url,
       publicId: videoData.publicId,
     });

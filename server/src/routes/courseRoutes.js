@@ -9,7 +9,7 @@ const validate = require("../middlewares/validate");
 const router = express.Router();
 
 
-router.post("/create-course", authMiddleware, authorizeRoles, validate(createCourseSchema),upload.single("thumbnail"),   createCourse);
+router.post("/create-course", authMiddleware, authorizeRoles, upload.single("thumbnail"), validate(createCourseSchema),  createCourse);
 router.get("/all-courses", authMiddleware, getAllCourses);
 router.get("/course/:id", authMiddleware, authorizeOwnership, getCourseById);
 router.put("/update-course/:id",authMiddleware,authorizeRoles,authorizeOwnership,validate(updateCourseSchema),updateCourse,);
