@@ -7,6 +7,11 @@ const lectureSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     videoUrl: {
       type: String,
       required: true,
