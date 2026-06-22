@@ -22,6 +22,7 @@ import InstructorCourses from "./pages/instructor/InstructorCourses";
 import InstructorProfile from "./pages/instructor/InstructorProfile";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import StudentAssignment from "./pages/student/StudentAssignment";
+import LearnCourse from "./pages/student/LearnCourse";
 
 import RoleRoute from "./routes/RoleRoute";
 import PublicRoute from "./routes/PublicRoute";
@@ -110,6 +111,15 @@ const App = () => {
             element={
               <RoleRoute allowedRoles={["student"]}>
                 <StudentAssignment />
+              </RoleRoute>
+            }
+          />
+
+          <Route
+            path="/courses/:courseId/learn"
+            element={
+              <RoleRoute allowedRoles={["student"]}>
+                <LearnCourse />
               </RoleRoute>
             }
           />

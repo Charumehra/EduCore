@@ -6,6 +6,8 @@ const courseRoutes = require("./src/routes/courseRoutes");
 const stripeRoutes = require("./src/routes/stripe.Routes");
 const aiRoutes = require("./src/routes/aiRoutes");
 const cookieParser = require("cookie-parser");
+require("./src/models/lecture");
+require("./src/models/course");
 const cors = require("cors"); 
 
 app.use(cors({

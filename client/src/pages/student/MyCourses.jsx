@@ -113,7 +113,7 @@ return (
                 </div>
 
                 <button
-                  onClick={() => navigate(`/learn/${course._id}`)}
+                  onClick={() => navigate(`/courses/${course._id}/learn`)}
                   className="mt-6 bg-primary hover:bg-primary-hover text-white py-3 rounded-xl font-medium transition"
                 >
                   Continue Learning

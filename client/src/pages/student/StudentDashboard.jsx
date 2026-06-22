@@ -7,6 +7,7 @@ import {
   setMyCourses,
   setSelectedCourse,
 } from "../../redux/slices/courseSlice";
+import { toast } from "react-toastify";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -114,7 +115,7 @@ const StudentDashboard = () => {
                   <button
                     onClick={() => {
                       dispatch(setSelectedCourse(course));
-                      navigate(`/learn/${course._id}`);
+                      navigate(`/courses/${course._id}/learn`);
                     }}
                     className="mt-auto bg-primary text-white py-2 rounded-xl hover:bg-primary-hover transition"
                   >
