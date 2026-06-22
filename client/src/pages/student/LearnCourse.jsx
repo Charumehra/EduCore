@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
 import { setSelectedCourse } from "../../redux/slices/courseSlice";
 import { setLectures, setCurrentLecture } from "../../redux/slices/lectureSlice";
+
 import { Play, ArrowLeft, ArrowRight, CheckSquare, Square, AlertCircle, HelpCircle } from "lucide-react";
 import { toast } from "react-toastify";
 
 const LearnCourse = () => {
   const courseId = window.location.pathname.split("/")[2];
   const dispatch = useDispatch(); 
+
   const course = useSelector((state) => state.course.selectedCourse);
   const lectures = useSelector((state) => state.lecture.lectures);
   const currentLecture = useSelector((state) => state.lecture.currentLecture);
@@ -47,7 +49,8 @@ const LearnCourse = () => {
           toast.error("Failed to resolve course content.");
         }
       } catch (error) {
-        toast.error("Error fetching course:", error);
+        console.error("Error fetching course:", error);
+        toast.error("An error occurred while connecting to the server.");
         setError(error.response?.data?.message || "An error occurred while connecting to the server.");
       } finally {
         setLoading(false);
@@ -76,12 +79,11 @@ const LearnCourse = () => {
     setCurrentLectureIndex(index);
     dispatch(setCurrentLecture(lectures[index]));
   };
-
   const toggleLessonCompletion = (lectureId) => {
     setCompletedLessons((prev) =>
       prev.includes(lectureId)
-        ? prev.filter((id) => id !== lectureId) // Uncheck
-        : [...prev, lectureId] // Check
+        ? prev.filter((id) => id !== lectureId)
+        : [...prev, lectureId] 
     );
   };
 
@@ -113,7 +115,7 @@ const LearnCourse = () => {
 
   if (error || !course) {
     return (
-      <div className="w-full h-screen flex items-center justify-center p-4 bg-white pt-14">
+      <div className="w-full h-screen flex items-center justify-center p-4 bg-white pt-10">
         <div className="bg-white p-6 rounded-xl shadow-md max-w-sm w-full text-center border border-gray-200 flex flex-col items-center">
           <AlertCircle className="w-12 h-12 text-red-500 mb-3" />
           <h2 className="text-lg font-bold text-gray-900 mb-1">Access Restrained</h2>
@@ -131,16 +133,16 @@ const LearnCourse = () => {
   }
 
   return (
-    <div className="w-full h-screen bg-white font-sans flex flex-col lg:flex-row pt-14 overflow-hidden">
+    <div className="w-full h-screen bg-white font-sans flex flex-col lg:flex-row pt-10 overflow-hidden">
       
       <div
         className="w-full lg:w-[68%] p-2 md:p-5 flex flex-col space-y-6 overflow-y-auto h-full"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        <div className="border border-gray-300 rounded-xl py-4 px-5 shadow-xs flex flex-col bg-white shrink-0">
+        <div className="border border-gray-300 rounded-xl py-2 px-5 shadow-xs flex flex-col bg-white shrink-0">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{course.title}</h1>
 
-          <div className="relative w-full aspect-video rounded-lg bg-[#E0E0E0] overflow-hidden mb-3">
+          <div className="relative w-full aspect-video rounded-lg bg-[#E0E0E0] overflow-hidden mb-2">
             {currentLecture ? (
               <video
                 key={currentLecture._id}
@@ -158,7 +160,7 @@ const LearnCourse = () => {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-2">
             <h2 className="text-xl font-bold text-gray-900">
               {currentLecture ? currentLecture.title : "Lesson Title Unavailable"}
             </h2>
@@ -171,17 +173,17 @@ const LearnCourse = () => {
             <button
               onClick={handlePrevious}
               disabled={currentLectureIndex === 0 || !lectures || lectures.length === 0}
-              className="flex items-center border border-gray-400 text-gray-700 font-medium px-4 py-2 rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="flex items-center border border-gray-400 text-gray-700 font-medium px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-all"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" /> Previous Lesson
+              <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-2 shrink-0" /> Previous
             </button>
             <button
               onClick={handleNext}
               disabled={!lectures || currentLectureIndex === lectures.length - 1 || lectures.length === 0}
               style={{ backgroundColor: "var(--color-primary)" }}
-              className="flex items-center text-white font-medium px-5 py-2 rounded-lg hover:brightness-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="flex items-center text-white font-medium px-2 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm rounded-lg hover:brightness-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-all"
             >
-              Next Lesson <ArrowRight className="w-4 h-4 ml-2" />
+              Next <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1 sm:mr-2 shrink-0" />
             </button>
           </div>
         </div>
@@ -216,19 +218,20 @@ const LearnCourse = () => {
           ))}
           {(!lectures || lectures.slice(currentLectureIndex + 1, currentLectureIndex + 4).length === 0) && (
             <div className="col-span-1 sm:col-span-3 text-center py-8 text-sm text-gray-400 border border-dashed border-gray-200 rounded-xl font-medium bg-gray-50/50">
-               You have reached the final segment of this course track!
+              🎉 You have reached the final segment of this course track!
             </div>
           )}
         </div>
       </div>
 
-      <div className="w-full lg:w-[32%] bg-[#F4ECF8] border-l border-gray-200 flex flex-col h-full lg:sticky lg:top-14">
-        <div className="p-4 flex items-center justify-between border-b border-gray-200 bg-[#F4ECF8] shrink-0">
+      <div className="w-full lg:w-[32%] bg-[#F4ECF8] border-t lg:border-t-0 lg:border-l border-gray-200 flex flex-col shrink-0 lg:h-full lg:sticky lg:top-14">
+        
+        <div className="hidden lg:flex p-4 items-center justify-between border-b border-gray-200 bg-[#F4ECF8] shrink-0">
           <h2 className="text-lg font-bold text-gray-900">Course Content</h2>
           <span className="text-sm font-bold" style={{ color: "var(--color-primary)" }}>{lectures?.length || 0} Lessons</span>
         </div>
 
-        <div className="flex-1 overflow-y-auto divide-y divide-gray-300 bg-[#F4ECF8]">
+        <div className="hidden lg:block flex-1 overflow-y-auto divide-y divide-gray-300 bg-[#F4ECF8]">
           {!lectures || lectures.length === 0 ? (
             <div className="p-6 text-center text-sm font-medium text-gray-400">
               Syllabus schedule mapping empty.
@@ -270,7 +273,7 @@ const LearnCourse = () => {
                     className="shrink-0 mt-1 cursor-pointer"
                   >
                     {isLectureCompleted ? (
-                      <CheckSquare className="w-5 h-5" style={{ color: "var(--color-primary)", backgroundColor: "white", borderRadius: "4px" }} />
+                      <CheckSquare className="w-5 h-5 " style={{ color: "var(--color-primary)", backgroundColor: "white", borderRadius: "4px" }} />
                     ) : (
                       <Square className="w-5 h-5 text-gray-400 bg-white rounded-md" />
                     )}
@@ -281,15 +284,19 @@ const LearnCourse = () => {
           )}
         </div>
 
-        <div className="p-5 border-t border-gray-300 bg-[#F4ECF8] shrink-0">
+        <div className="p-4 sm:p-5 border-t border-gray-300 bg-[#F4ECF8] shrink-0">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-bold text-gray-900">Your progress</span>
             <span className="text-sm font-bold" style={{ color: "var(--color-primary)" }}>{progressPercentage}% complete</span>
           </div>
-          <div className="w-full bg-gray-300 rounded-full h-2 overflow-hidden mb-3">
+          
+          <div className="w-full bg-gray-300 rounded-full h-2 overflow-hidden mb-1 sm:mb-3">
             <div style={{ backgroundColor: "var(--color-primary)", width: `${progressPercentage}%` }} className="h-full transition-all duration-300" />
           </div>
-          <p className="text-xs text-gray-500 font-medium">Completed {completedLessonsCount} of {totalLessons} lessons</p>
+          
+          <p className="text-xs text-gray-500 font-medium hidden sm:block">
+            Completed {completedLessonsCount} of {totalLessons} lessons
+          </p>
         </div>
       </div>
       
