@@ -40,9 +40,13 @@ const LearnCourse = () => {
           dispatch(setLectures(lectureList));
 
           if (lectureList.length > 0) {
+            const validIds = lectureList.map((lec) => lec._id);
+            setCompletedLessons((prev) => prev.filter((id) => validIds.includes(id)));
+
             setCurrentLectureIndex(0);
             dispatch(setCurrentLecture(lectureList[0]));
           } else {
+            setCompletedLessons([]);
             dispatch(setCurrentLecture(null));
           }
         } else {
@@ -79,11 +83,10 @@ const LearnCourse = () => {
     setCurrentLectureIndex(index);
     dispatch(setCurrentLecture(lectures[index]));
   };
+
   const toggleLessonCompletion = (lectureId) => {
     setCompletedLessons((prev) =>
-      prev.includes(lectureId)
-        ? prev.filter((id) => id !== lectureId)
-        : [...prev, lectureId] 
+      prev.includes(lectureId) ? prev : [...prev, lectureId] 
     );
   };
 
@@ -268,16 +271,13 @@ const LearnCourse = () => {
                     </div>
                   </button>
 
-                  <button 
-                    onClick={() => toggleLessonCompletion(lecture._id)}
-                    className="shrink-0 mt-1 cursor-pointer"
-                  >
+                  <div className="shrink-0 mt-1 select-none">
                     {isLectureCompleted ? (
                       <CheckSquare className="w-5 h-5 " style={{ color: "var(--color-primary)", backgroundColor: "white", borderRadius: "4px" }} />
                     ) : (
                       <Square className="w-5 h-5 text-gray-400 bg-white rounded-md" />
                     )}
-                  </button>
+                  </div>
                 </div>
               );
             })
