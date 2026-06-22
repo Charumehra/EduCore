@@ -218,7 +218,7 @@ const LearnCourse = () => {
           ))}
           {(!lectures || lectures.slice(currentLectureIndex + 1, currentLectureIndex + 4).length === 0) && (
             <div className="col-span-1 sm:col-span-3 text-center py-8 text-sm text-gray-400 border border-dashed border-gray-200 rounded-xl font-medium bg-gray-50/50">
-              🎉 You have reached the final segment of this course track!
+               You have reached the final segment of this course track!
             </div>
           )}
         </div>
