@@ -37,7 +37,6 @@ const ManageCourses = () => {
       const res = await api.get("/courses/all-courses");
       dispatch(setCourses(res.data.courses || []));
     } catch (error) {
-      console.error(error);
       toast.error("Failed to fetch courses");
     }
   };
@@ -114,7 +113,6 @@ const ManageCourses = () => {
       setShowDeleteModal(false);
       setCourseToDelete(null);
     } catch (error) {
-      console.error(error);
       toast.error("Failed to delete course");
     } finally {
       setDeleting(false);
@@ -262,7 +260,7 @@ const ManageCourses = () => {
                     No lectures added yet. Populate this course shell using the addition form on the right.
                   </p>
                 ) : (
-                  <div className="max-h-[500px] overflow-y-auto space-y-3 pr-2">
+                  <div className="max-h-125 overflow-y-auto space-y-3 pr-2">
                     {lectures.map((lec, i) => (
                       <div key={lec._id || i} className="flex items-center justify-between border rounded-xl p-4 bg-white shadow-sm hover:border-purple-300 transition">
                         <div className="flex items-center gap-3">
