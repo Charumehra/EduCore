@@ -33,6 +33,10 @@ const Register = () => {
       toast.error("Please select a role");
       return;
     }
+    if(formData.password.length < 6){
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
 
     try {
       setLoading(true);
