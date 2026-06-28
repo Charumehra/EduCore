@@ -20,7 +20,7 @@ const handleProfileClick = () => {
     <div className="w-full  h-14 bg-white shadow fixed top-0 left-0 z-30">
       {user ? (
         <div className="h-full flex items-center justify-between px-4">
-          <button onClick={() => setIsOpen(true)} className="text-2xl">
+          <button aria-label="Open menu" onClick={() => setIsOpen(true)} className="text-2xl">
             <Menu size={24} color="#6B2E93" />
           </button>
 
@@ -37,6 +37,7 @@ const handleProfileClick = () => {
           </div>
 
           <button 
+            aria-label="View profile"
             onClick={handleProfileClick}
             className="w-7.5 h-7.5  outline-2 outline-primary rounded-full bg-white text-primary flex items-center justify-center font-semibold"
           >
@@ -57,7 +58,7 @@ const handleProfileClick = () => {
             </h1>
           </div>
 
-          <button type="button" className="flex items-center justify-center">
+          <button aria-label="View profile" type="button" className="flex items-center justify-center">
             <CircleUserIcon size={30} color="#6B2E93" />
           </button>
         </div>

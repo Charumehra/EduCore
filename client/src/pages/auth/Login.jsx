@@ -80,6 +80,7 @@ return ( <div className="min-h-screen overflow-y-auto bg-background flex items-c
       <img
         src={studentImage}
         alt="Student"
+        loading="eager"
         className="hidden lg:block w-72 sm:w-96 lg:w-100 h-auto lg:h-80 mt-6 lg:mt-8"
       />
     </div>
@@ -136,6 +137,7 @@ return ( <div className="min-h-screen overflow-y-auto bg-background flex items-c
             />
 
             <button
+            aria-label={showPassword ? "Hide password" : "Show password"}
               type="button"
               onClick={() =>
                 setShowPassword(!showPassword)

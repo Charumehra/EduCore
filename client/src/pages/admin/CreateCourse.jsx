@@ -149,6 +149,7 @@ const CreateCourse = () => {
                     className="w-full border rounded-xl px-4 py-3 pr-32"
                   />
                   <button
+                  aria-label="Generate course description"
                     type="button"
                     disabled={generating}
                     onClick={handleGenerateDescription}
@@ -197,6 +198,7 @@ const CreateCourse = () => {
                   <input
                     type="file"
                     accept="image/*"
+                    aria-label="Upload course thumbnail"
                     onChange={(e) => setThumbnail(e.target.files[0])}
                     required
                     className="w-full border rounded-xl px-4 py-3"
@@ -274,6 +276,7 @@ const CreateCourse = () => {
                     onChange={(e) => setLectureVideo(e.target.files[0])}
                     required
                     className="w-full border rounded-xl px-4 py-2.5 text-sm"
+                    aria-label="Upload lecture video"
                   />
                 </div>
 
@@ -281,6 +284,7 @@ const CreateCourse = () => {
                   type="submit"
                   disabled={loading}
                   className="w-full border border-primary text-primary py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-50 transition text-sm font-medium"
+                  aria-label="Upload lecture video"
                 >
                   <Plus size={16} />
                   {loading ? "Uploading Media..." : "Upload & Save Lecture"}

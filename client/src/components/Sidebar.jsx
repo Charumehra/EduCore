@@ -62,11 +62,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         path: "/instructor/courses",
         icon: BookOpen,
       },
-      // {
-      //   name: "Enrolled Students",
-      //   path: "/instructor/students",
-      //   icon: Users,
-      // },
       {
         name: "Profile",
         path: "/instructor/profile",
@@ -175,7 +170,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </nav>
 
         <div className="absolute bottom-0 left-0 w-full p-4 border-t border-gray-700">
-          <button
+          <button aria-label="logout"
             onClick={handleLogout}
             className="w-full bg-red-600 hover:bg-red-700 py-2 rounded transition"
           >

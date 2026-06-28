@@ -195,6 +195,7 @@ const ManageCourses = () => {
                           <div className="flex justify-center gap-2">
                             {/* Manage Lectures Trigger Button */}
                             <button
+                              aria-label="Manage lectures"
                               onClick={() => handleOpenLectureManager(course)}
                               className="flex items-center gap-1 px-3 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-medium hover:bg-purple-200 transition"
                               title="Manage Lectures"
@@ -204,6 +205,7 @@ const ManageCourses = () => {
                             </button>
 
                             <button
+                              aria-label="Edit course"
                               onClick={() => {
                                 setEditingCourse(course);
                                 setShowEditModal(true);
@@ -214,6 +216,7 @@ const ManageCourses = () => {
                             </button>
 
                             <button
+                              aria-label="Delete course"
                               onClick={() => {
                                 setCourseToDelete(course);
                                 setShowDeleteModal(true);
@@ -235,6 +238,7 @@ const ManageCourses = () => {
           /* --- Dynamic Lecture Subspace Sub-View --- */
           <div className="bg-white rounded-3xl shadow-lg p-6 md:p-8">
             <button
+              aria-label="Back to courses"
               onClick={() => setSelectedCourseForLectures(null)}
               className="flex items-center gap-2 text-gray-600 hover:text-primary font-medium mb-6 transition"
             >
@@ -276,6 +280,7 @@ const ManageCourses = () => {
                           onClick={() => handleDeleteLecture(lec._id)}
                           className="p-2 text-gray-400 hover:text-red-600 rounded-lg transition"
                           title="Delete Lecture"
+                          aria-label="Delete Lecture"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -327,6 +332,7 @@ const ManageCourses = () => {
                   </div>
                   <button
                     type="submit"
+                    aria-label="Upload lecture video"
                     disabled={uploadingLecture}
                     className="w-full bg-primary text-white py-2.5 rounded-xl font-medium text-sm transition hover:opacity-95 disabled:opacity-50"
                   >
@@ -346,8 +352,8 @@ const ManageCourses = () => {
             <h2 className="text-xl font-bold text-primary">Delete Course</h2>
             <p className="mt-2">Are you sure you want to delete <b>{courseToDelete?.title}</b>?</p>
             <div className="flex justify-end gap-3 mt-6">
-              <button onClick={() => setShowDeleteModal(false)} className="px-4 py-2 border rounded-lg">Cancel</button>
-              <button onClick={handleDelete} disabled={deleting} className="px-4 py-2 bg-red-600 text-white rounded-lg">
+              <button aria-label="Cancel delete" onClick={() => setShowDeleteModal(false)} className="px-4 py-2 border rounded-lg">Cancel</button>
+              <button aria-label="Confirm delete" onClick={handleDelete} disabled={deleting} className="px-4 py-2 bg-red-600 text-white rounded-lg">
                 {deleting ? "Deleting..." : "Delete"}
               </button>
             </div>
@@ -385,8 +391,8 @@ const ManageCourses = () => {
               <option value="advanced">Advanced</option>
             </select>
             <div className="flex justify-end gap-3">
-              <button onClick={() => setShowEditModal(false)} className="px-4 py-2 border rounded-lg">Cancel</button>
-              <button onClick={handleUpdateCourse} disabled={updating} className="px-4 py-2 bg-primary text-white rounded-lg">
+              <button aria-label="Cancel edit" onClick={() => setShowEditModal(false)} className="px-4 py-2 border rounded-lg">Cancel</button>
+              <button aria-label="Save changes" onClick={handleUpdateCourse} disabled={updating} className="px-4 py-2 bg-primary text-white rounded-lg">
                 {updating ? "Updating..." : "Update"}
               </button>
             </div>
